@@ -21,16 +21,12 @@
 #include <list>
 #include <sstream>
 #include <pugixml/pugixml.hpp>
-#include "../Bytelink/GUI/Animations/GUI_Animation.h"
 
 using namespace std;
 using namespace boost::filesystem;
 using namespace boost::algorithm;
 
 #define foreach BOOST_FOREACH
-
-class GUI_Animation;
-struct SkinImage;
 
 class CoreFunctions
 {
@@ -44,9 +40,5 @@ public:
 	static void WriteLog(string log);
 	static void ClearLog();
 	static void Tokenize(string input, string tokens, vector<string> * output);
-	static GUI_Animation::AnimType ConvertStringToAnimType(string type);
 	static SDL_Color ConvertColorNodeToSDLColor(pugi::xml_node ColorNode);
-	static SkinImage ConvertImageNodeToSkinImage(pugi::xml_node ImageNode);
 };
-
-#include "../Bytelink/GUI/GUI_Skin.h"
