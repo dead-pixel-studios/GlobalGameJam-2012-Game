@@ -90,20 +90,6 @@ void CoreFunctions::Tokenize(string input, string tokens, vector<string> * outpu
 	}
 }
 
-GUI_Animation::AnimType CoreFunctions::ConvertStringToAnimType(string type)
-{
-	if(boost::iequals(type,"APPEAR"))
-	{
-		return GUI_Animation::APPEAR;
-	}
-	else if(boost::iequals(type,"DISAPPEAR"))
-	{
-		return GUI_Animation::DISAPPEAR;
-	}
-
-	return GUI_Animation::APPEAR;
-}
-
 SDL_Color CoreFunctions::ConvertColorNodeToSDLColor(pugi::xml_node ColorNode)
 {
 	SDL_Color retColor;
@@ -118,20 +104,4 @@ SDL_Color CoreFunctions::ConvertColorNodeToSDLColor(pugi::xml_node ColorNode)
 	retColor.unused = atoi(aNode.value());
 
 	return retColor;
-}
-
-SkinImage CoreFunctions::ConvertImageNodeToSkinImage(pugi::xml_node ImageNode)
-{
-	SkinImage retImage;
-	pugi::xml_node uriNode = ImageNode.child("uri").first_child();
-	pugi::xml_node opacityNode = ImageNode.child("opacity").first_child();
-	pugi::xml_node transparencyNode = ImageNode.child("hasTransparency").first_child();
-
-	retImage.uri = string(uriNode.value());
-	retImage.opacity = atoi(opacityNode.value());
-
-	if(atoi(transparencyNode.value())==0) { retImage.transparent = false; }
-	else { retImage.transparent = true; }
-
-	return retImage;
 }

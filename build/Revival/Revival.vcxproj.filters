@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Header Files\AppCore">
+      <UniqueIdentifier>{f9dbeffb-0d1c-44d7-b924-f47b89521a0d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\CoreEngine">
+      <UniqueIdentifier>{67dbd5ff-1f6b-4056-b1ee-6bebb59d3720}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Revival">
+      <UniqueIdentifier>{92121ddc-2cad-4f52-8ac5-ab995637e4ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\AppCore">
+      <UniqueIdentifier>{2a6113f3-060e-40c2-a391-5688fb239eba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\CoreEngine">
+      <UniqueIdentifier>{6544caf4-46b4-4a3a-b9e2-22aa159f97e7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Revival">
+      <UniqueIdentifier>{18be5908-b255-4595-945e-88aa5405f97d}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\AppCore\AppCore.h">
+      <Filter>Header Files\AppCore</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\CoreEngine\CoreEngine.h">
+      <Filter>Header Files\CoreEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\CoreEngine\CoreFunctions.h">
+      <Filter>Header Files\CoreEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\CoreEngine\CoreGraphics.h">
+      <Filter>Header Files\CoreEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\CoreEngine\CorePosition.h">
+      <Filter>Header Files\CoreEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\CoreEngine\CoreSize.h">
+      <Filter>Header Files\CoreEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\CoreEngine\OpenGLTexture.h">
+      <Filter>Header Files\CoreEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Revival\Universe.h">
+      <Filter>Header Files\Revival</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\AppCore\AppCore.cpp">
+      <Filter>Source Files\AppCore</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\CoreEngine\CoreEngine.cpp">
+      <Filter>Source Files\CoreEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\CoreEngine\CoreFunctions.cpp">
+      <Filter>Source Files\CoreEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\CoreEngine\CoreGraphics.cpp">
+      <Filter>Source Files\CoreEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\CoreEngine\CorePosition.cpp">
+      <Filter>Source Files\CoreEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\CoreEngine\CoreSize.cpp">
+      <Filter>Source Files\CoreEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\CoreEngine\OpenGLTexture.cpp">
+      <Filter>Source Files\CoreEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libs\pugixml\pugixml.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Revival\Universe.cpp">
+      <Filter>Source Files\Revival</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

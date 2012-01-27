@@ -2,7 +2,7 @@
 
 #include "../CoreEngine/CoreGraphics.h"
 #include "../CoreEngine/CoreFunctions.h"
-#include "../CoreEngine/OpenGLTexture.h"
+#include "../Revival/Universe.h"
 
 class CoreGraphics;
 
@@ -25,5 +25,6 @@ private:
 	int appStartFrame;
 	bool quit;
 
+	Universe * universe;
 	void Init();
 };
