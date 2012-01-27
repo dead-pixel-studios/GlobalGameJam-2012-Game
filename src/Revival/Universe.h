@@ -9,6 +9,9 @@ public:
 	static Universe* Instance();
 	void Update(float fTime);
 	void Draw();
+
+	void rotateP();
+	void rotateM();
 protected:
 	Universe(void) {};
 	Universe(const Universe&);
@@ -16,6 +19,7 @@ protected:
 private:
 	static Universe* pinstance;
 	void Init();
+	float rotation;
 
 	CoreGraphics * gEngine;
 	OpenGLTexture * texture1;

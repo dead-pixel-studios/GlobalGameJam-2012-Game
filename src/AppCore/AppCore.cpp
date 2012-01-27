@@ -43,4 +43,12 @@ void AppCore::Update(float fTime)
 
 void AppCore::HandleKeyDown(SDL_Event keyDownEvent)
 {
+	switch(keyDownEvent.key.keysym.sym) {
+	case SDLK_KP_PLUS:
+		universe->rotateP();
+		break;
+	case SDLK_KP_MINUS:
+		universe->rotateM();
+		break;
+	}
 }

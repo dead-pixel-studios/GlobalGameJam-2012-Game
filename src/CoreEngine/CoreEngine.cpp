@@ -43,6 +43,7 @@ bool CoreEngine::CheckEvents() {
 			break;
 		case SDL_KEYDOWN:
 			if (event.key.keysym.sym == SDLK_ESCAPE) { return true; }
+			CoreApp->HandleKeyDown(event);
 			break;
 		}
 		RaiseEvent(event);
