@@ -5,6 +5,6 @@
 class Powerup : public SpriteBase
 {
 public:
-	Powerup();
+	Powerup(CorePosition pos);
 	void Update(float fTime);
 };

@@ -35,7 +35,8 @@ TestMap::TestMap()
 	_backgroundmistPos=CorePosition(0,0);
 	_foregroundmistPos=CorePosition(0,0);
 
-	_pwrUp = new Powerup();
+	_pwrUp = new Powerup(CorePosition(800,1080));
+	Universe::Instance()->AddSprite(_pwrUp);
 
 	_visible=true;
 	lastMistScroll = 0.0F;
@@ -90,7 +91,7 @@ void TestMap::Draw()
 		color.b = 0;
 		this->gEngine->DrawString(CoreFunctions::addIntToString("PosY: ", _pos.GetY()),textPos,color);
 
-		_pwrUp->Draw();
+		//_pwrUp->Draw();
 	}
 }
 

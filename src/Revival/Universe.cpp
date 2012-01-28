@@ -2,6 +2,7 @@
 #include "TestSprite.h"
 #include "TestMap.h"
 #include "Player.h"
+#include <iostream>
 
 SDL_bool SDL_HasIntersection(const SDL_Rect * A, const SDL_Rect * B)
 {
@@ -73,6 +74,7 @@ void Universe::Update(float fTime)
 		_sprites.erase(*i);
 		delete *i;
 	}
+	_deletes.clear();
 }
 
 void Universe::Draw()
@@ -112,6 +114,9 @@ SpriteSet Universe::CollisionDetect(CorePosition pos, CoreSize size, SpriteBase 
 				secRect.w=sprite->GetSize().GetWidth();
 				secRect.h=sprite->GetSize().GetHeight();
 				if(SDL_HasIntersection(&priRect, &secRect)){
+					/*std::cout << "Collision detected!" << std::endl;
+					std::cout << "P:" << priRect.x << ',' << priRect.y << ':' << priRect.w << 'x' << priRect.h << std::endl;
+					std::cout << "S:" << secRect.x << ',' << secRect.y << ':' << secRect.w << 'x' << secRect.h << std::endl;*/
 					ret.insert(sprite);
 				}
 			}
