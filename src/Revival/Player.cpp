@@ -18,9 +18,11 @@ Player::Player(){
 
 	_hitFloor=false;
 	_visible=false;
+
+	this->currentspeed= 0;
 }
 
-void Player::Update(float){
+void Player::Update(float delta){
 	if(IsKeyDown(SDLK_RIGHT)){
 		_visible=false;
 		_hitFloor=false;
@@ -39,7 +41,6 @@ void Player::Update(float){
 	_lpoint2=lpoint2;
 
 	_pos=CorePosition(lpoint1.GetX()-50, lpoint1.GetY()-_size.GetHeight());
-	_visible=true;
 
 	double angle=atan2((double)lpoint2.GetY() - lpoint1.GetY(), (double)lpoint2.GetX() - lpoint1.GetX()) * 180 / 3.14159;
 	if(angle<=0)angle+=360.0;
@@ -76,7 +77,7 @@ CorePosition Player::LandPoint(CorePosition point){
 	startPoint.SetX(_pos.GetX()+point.GetX());
 	while(!hit){
 		startPoint.SetY(startPoint.GetY()+1);
-		if(startPoint.GetY()>1024) break;
+		if(startPoint.GetY()>1024) break; // don't go on forever, give up after 1024 down
 
 		CoreColor pxl=Universe::Instance()->_currentMap->GetPixel(startPoint);
 		Uint32 col=pxl.rgba();
