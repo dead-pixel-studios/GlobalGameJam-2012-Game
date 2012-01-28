@@ -12,4 +12,8 @@ Powerup::Powerup()
 
 void Powerup::Update(float)
 {
+	SpriteSet cols=CollisionDetect();
+	if(cols.count(Universe::Instance()->_focus)){
+		Universe::Instance()->RemoveAndDeleteSprite(this);
+	}
 }

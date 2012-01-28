@@ -68,6 +68,11 @@ void Universe::Update(float fTime)
 		SpriteBase *ptr = *i;
 		ptr->Update(fTime);
 	}
+
+	for(SpriteItr i=_deletes.begin(); i!=_deletes.end(); ++i){
+		_sprites.erase(*i);
+		delete *i;
+	}
 }
 
 void Universe::Draw()
@@ -113,4 +118,8 @@ SpriteSet Universe::CollisionDetect(CorePosition pos, CoreSize size, SpriteBase 
 		}
 	}
 	return ret;
+}
+
+void Universe::RemoveAndDeleteSprite(SpriteBase *sprite){
+	_deletes.insert(sprite);
 }

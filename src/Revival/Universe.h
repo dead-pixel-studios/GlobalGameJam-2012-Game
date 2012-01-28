@@ -35,6 +35,6 @@ private:
 	void Init();
 	float rotation;
 
-	SpriteSet _sprites;
+	SpriteSet _sprites, _deletes;
 	KeySet _keys;
 };
