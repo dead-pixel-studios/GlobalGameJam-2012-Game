@@ -22,6 +22,8 @@ private:
 
 	bool WorldCollisionCheck();
 	CorePosition LandPoint(CorePosition point);
+
+	int _health;
 public:
 	Player();
 	void Update(float dT);

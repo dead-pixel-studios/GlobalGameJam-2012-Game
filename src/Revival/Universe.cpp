@@ -107,16 +107,13 @@ SpriteSet Universe::CollisionDetect(CorePosition pos, CoreSize size, SpriteBase 
 	for(SpriteItr i=_sprites.begin();i!=_sprites.end();++i){
 		if(*i!=ignore){
 			SpriteBase *sprite=*i;
-			if(sprite->GetVisible()){
+			if(sprite->IsVisible() && sprite->IsSolid()){
 				SDL_Rect secRect;
 				secRect.x=sprite->GetPosition().GetX();
 				secRect.y=sprite->GetPosition().GetY();
 				secRect.w=sprite->GetSize().GetWidth();
 				secRect.h=sprite->GetSize().GetHeight();
 				if(SDL_HasIntersection(&priRect, &secRect)){
-					/*std::cout << "Collision detected!" << std::endl;
-					std::cout << "P:" << priRect.x << ',' << priRect.y << ':' << priRect.w << 'x' << priRect.h << std::endl;
-					std::cout << "S:" << secRect.x << ',' << secRect.y << ':' << secRect.w << 'x' << secRect.h << std::endl;*/
 					ret.insert(sprite);
 				}
 			}

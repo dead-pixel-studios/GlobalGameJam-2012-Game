@@ -21,6 +21,7 @@ protected:
 	int _deltaAngle;
 
 	bool _visible;
+	bool _solid;
 
 	CoreGraphics *gEngine;
 	OpenGLTexture *texture;
@@ -41,5 +42,6 @@ public:
 
 	CorePosition GetPosition() {return _pos;}
 	CoreSize GetSize() {return _size;}
-	bool GetVisible();
+	bool IsVisible();
+	bool IsSolid();
 };

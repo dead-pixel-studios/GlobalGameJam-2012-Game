@@ -28,6 +28,9 @@ TestMap::TestMap()
 	lava3 = gEngine->CreateTexture(CoreFunctions::GetAppPath() + "/data/Level1/Lava3.png");
 	lava3->Load();
 
+	killzone = gEngine->CreateTexture(CoreFunctions::GetAppPath() + "/data/Level1/KillZone.png");
+	killzone->Load();
+
 
 	_size=CoreSize(3072,1536);
 	_pos=CorePosition(0,0);
@@ -97,4 +100,8 @@ void TestMap::Draw()
 
 CoreColor TestMap::GetPixel(CorePosition pos){
 	return gEngine->getPixelColor(collision->GetSurface(), pos.GetX(), pos.GetY());
+}
+
+bool TestMap::IsKillZone(CorePosition pos){
+	return gEngine->getPixelColor(killzone->GetSurface(), pos.GetX(), pos.GetY()).rgba() == 0xff0000ff;
 }

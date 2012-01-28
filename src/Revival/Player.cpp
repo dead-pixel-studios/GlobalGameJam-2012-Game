@@ -24,6 +24,8 @@ Player::Player(){
 	this->jump_elapsed = 0.0F; // current jump
 	this->jumping = false;
 
+	_health=100;
+
 	_visible=true;
 
 	this->currentspeed = 0;
@@ -84,6 +86,18 @@ void Player::Update(float delta){
 	if(angle<-60.0) angle=-60.0;
 	if(angle<=0) angle+=360.0;
 	_angle=angle;
+	
+	_visible=true;
+
+	if(Universe::Instance()->_currentMap->IsKillZone(_pos+_point1)) _health-=10;
+	
+	if(_health<=0){
+		//fade out
+		_visible=false;
+		_pos=CorePosition(0,0);
+		_health=100;
+		std::cout << "DIED!" << std::endl;
+	}
 }
 
 void Player::Draw(){
