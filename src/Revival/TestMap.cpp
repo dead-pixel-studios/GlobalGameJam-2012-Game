@@ -25,7 +25,6 @@ TestMap::TestMap()
 
 	lava3 = gEngine->CreateTexture(CoreFunctions::GetAppPath() + "/data/Level1/Lava3.png");
 	lava3->Load();
-
 	_size=CoreSize(3072,1536);
 	_pos=CorePosition(0,0);
 
