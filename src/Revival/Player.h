@@ -2,7 +2,7 @@
 
 #include "SpriteBase.h"
 
-class Player : public SpriteBase{
+class Player : public SpriteBase {
 private:
 	CorePosition _point1, _point2;
 	CorePosition _lpoint1, _lpoint2;

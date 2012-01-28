@@ -1,6 +1,7 @@
 #pragma once
 
 #include "SpriteBase.h"
+#include "Powerup.h"
 
 class TestMap : public SpriteBase {
 public:
@@ -23,6 +24,8 @@ private:
 	OpenGLTexture * lava1;
 	OpenGLTexture * lava2;
 	OpenGLTexture * lava3;
+
+	Powerup * _pwrUp;
 
 	int lavaStep;
 };
