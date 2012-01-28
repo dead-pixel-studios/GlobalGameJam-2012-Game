@@ -32,7 +32,12 @@ void Player::Update(float delta){
 	if(IsKeyDown(SDLK_LEFT)){
 		move = maxpixels_persecond_speed * delta * MOVEMENT_BACKWARD;
 	}
-	_pos.SetX(_pos.GetX() + move);
+	float wantedx = _pos.GetX() + move;
+	float min_x = 0.0F;
+	float max_x = Universe::Instance()->_currentMap->GetSize().GetWidth();
+	if(wantedx >= min_x && wantedx <= max_x) {
+		_pos.SetX(wantedx);
+	}
 
 	CorePosition lpoint1=LandPoint(_point1);
 	CorePosition lpoint2=LandPoint(_point2);
