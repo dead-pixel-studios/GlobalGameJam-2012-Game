@@ -26,11 +26,16 @@ TestMap::TestMap()
 
 	lava3 = gEngine->CreateTexture(CoreFunctions::GetAppPath() + "/data/Level1/Lava3.png");
 	lava3->Load();
+
+
 	_size=CoreSize(3072,1536);
 	_pos=CorePosition(0,0);
 
 	_backgroundmistPos=CorePosition(0,0);
 	_foregroundmistPos=CorePosition(0,0);
+
+	_pwrUp = new Powerup();
+
 	_visible=true;
 	lastMistScroll = 0.0F;
 	lastLavaChange = 0.0F;
@@ -83,6 +88,8 @@ void TestMap::Draw()
 		color.g = 0;
 		color.b = 0;
 		this->gEngine->DrawString(CoreFunctions::addIntToString("PosY: ", _pos.GetY()),textPos,color);
+
+		_pwrUp->Draw();
 	}
 }
 	/*

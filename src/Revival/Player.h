@@ -2,7 +2,7 @@
 
 #include "SpriteBase.h"
 
-class Player : public SpriteBase{
+class Player : public SpriteBase {
 private:
 	bool _hitFloor;
 
