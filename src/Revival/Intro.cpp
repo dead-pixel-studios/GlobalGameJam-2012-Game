@@ -31,26 +31,27 @@ void Intro::Init() {
 	this->fade = 0.0F;
 
 	this->player1 = new CoreController(1);
+
+	this->accumulator = 0;
 }
 
 void Intro::Update(float fTime)
 {
-	float tslu = fTime-lastUpdate;
-	this->openedFor += tslu;
+	accumulator = accumulator + fTime;
 
-	if(tslu >= 10) {
-		this->lastUpdate = fTime;
+	if(accumulator >= 10) {
+		accumulator = fTime - accumulator;
 
 		if(this->fadeIn) {
-			this->fade += 0.005F;
+			this->fade +=  0.05F;
 			if(this->fade >= 1.0F) {
 				this->fadeIn = false;
 			}
 		}
 		else {
-			this->rotation += 1.0F;
-			if(this->rotation >= 360) {
-				this->rotation = 0;
+			this->rotation -= 1.5F;
+			if(this->rotation <= 0) {
+				this->rotation = 360;
 			}
 		}
 	}
