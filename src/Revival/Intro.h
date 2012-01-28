@@ -1,5 +1,6 @@
 #pragma once
 #include "../CoreEngine/CoreGraphics.h"
+#include "../CoreEngine/CoreController.h"
 
 class Intro {
 public:
@@ -23,6 +24,7 @@ private:
 	CoreSize * size;
 	CorePosition * snakepos;
 	CoreSize * snakesize;
+	CoreController * player1;
 
 	float openedFor;
 	float lastUpdate;
