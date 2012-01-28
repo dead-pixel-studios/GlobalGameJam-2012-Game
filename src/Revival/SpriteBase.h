@@ -19,6 +19,8 @@ protected:
 	friend class SpriteZCompare;
 	
 	void DefaultDraw();
+	
+	bool IsKeyDown(SDLKey key);
 public:
 	SpriteBase();
 

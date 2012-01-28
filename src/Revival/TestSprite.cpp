@@ -12,16 +12,8 @@ TestSprite::TestSprite(){
 }
 
 void TestSprite::Update(float){
-	switch(Universe::Instance()->currentKeyStatus) {
-	case SDLK_KP_PLUS:
-	case SDLK_RIGHT:
-		rotateP();
-		break;
-	case SDLK_KP_MINUS:
-	case SDLK_LEFT:
-		rotateM();
-		break;
-	}
+	if(IsKeyDown(SDLK_KP_PLUS) || IsKeyDown(SDLK_RIGHT)) rotateP();
+	if(IsKeyDown(SDLK_KP_MINUS) || IsKeyDown(SDLK_LEFT)) rotateM();
 }
 
 void TestSprite::rotateP()

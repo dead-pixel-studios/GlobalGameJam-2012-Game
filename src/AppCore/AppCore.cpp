@@ -43,9 +43,9 @@ void AppCore::Update(float fTime)
 
 void AppCore::HandleKeyDown(SDL_Event keyDownEvent)
 {
-	universe->currentKeyStatus=keyDownEvent.key.keysym.sym;
+	universe->KeyDown(keyDownEvent.key.keysym.sym);
 }
 
 void AppCore::HandleKeyUp(SDL_Event keyUpEvent){
-	universe->currentKeyStatus=SDLK_UNKNOWN;
+	universe->KeyUp(keyUpEvent.key.keysym.sym);
 }

@@ -8,7 +8,6 @@ Universe* Universe::Instance () {
 }
 
 void Universe::Init() {
-	currentKeyStatus=SDLK_UNKNOWN;
 	AddSprite(new TestSprite());
 }
 
@@ -30,4 +29,16 @@ void Universe::Draw()
 		SpriteBase *ptr = *i;
 		ptr->Draw();
 	}
+}
+
+void Universe::KeyDown(SDLKey key){
+	_keys.insert(key);
+}
+
+void Universe::KeyUp(SDLKey key){
+	_keys.erase(key);
+}
+
+bool Universe::IsKeyDown(SDLKey key){
+	return _keys.count(key);
 }
