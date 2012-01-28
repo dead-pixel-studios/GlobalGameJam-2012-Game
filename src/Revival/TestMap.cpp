@@ -14,7 +14,7 @@ TestMap::TestMap()
 	foregroundMist = gEngine->CreateTexture(CoreFunctions::GetAppPath() + "/data/Level1/MistForeground.png");
 	foregroundMist->Load();
 
-	collision = gEngine->CreateTexture(CoreFunctions::GetAppPath() + "/data/Level1/Level1Collision.png");
+	collision = gEngine->CreateTexture(CoreFunctions::GetAppPath() + "/data/Level1/Collision.png");
 	collision->Load();
 
 	lava1 = gEngine->CreateTexture(CoreFunctions::GetAppPath() + "/data/Level1/Lava1.png");
@@ -31,30 +31,48 @@ TestMap::TestMap()
 	_backgroundmistPos=CorePosition(0,0);
 	_foregroundmistPos=CorePosition(0,0);
 	_visible=true;
-	lastUpdate = 0.0F;
+	lastMistScroll = 0.0F;
+	lastLavaChange = 0.0F;
+	lavaStep = 0;
 }
 
 void TestMap::Update(float fTime)
 {
-	float tslu = fTime-lastUpdate;
-
-	if(tslu > 10) {
-		lastUpdate = fTime;
+	if(fTime-lastMistScroll > 10) {
+		lastMistScroll = fTime;
 		if(_pos.GetY()>0-768) {
 			_pos.SetY(_pos.GetY()-1);
 		}
 		_backgroundmistPos.SetX(_backgroundmistPos.GetX() - 1);
 		_foregroundmistPos.SetX(_foregroundmistPos.GetX() - 2);
 	}
+
+	if(fTime-lastLavaChange > 100) {
+		lastLavaChange = fTime;
+		lavaStep++;
+		if(lavaStep>2) { lavaStep = 0; }
+	}
 }
 
 void TestMap::Draw()
 {
 	if(_visible) {
-		this->gEngine->DrawTexture(texture,&_pos,&_size,_angle);
-		this->gEngine->DrawTexture(backgroundMist,&_backgroundmistPos,&_size,_angle);
-		this->gEngine->DrawTexture(foreground,&_pos,&_size,_angle);
-		this->gEngine->DrawTexture(foregroundMist,&_foregroundmistPos,&_size,_angle);
+		this->gEngine->DrawTexture(texture,&_pos,&centerPoint,&_size,_angle);
+		this->gEngine->DrawTexture(backgroundMist,&_backgroundmistPos,&centerPoint,&_size,_angle);
+		this->gEngine->DrawTexture(foreground,&_pos,&centerPoint,&_size,_angle);
+
+		switch(lavaStep) {
+		case 0:
+			this->gEngine->DrawTexture(lava1,&_pos,&centerPoint,&_size,_angle);
+			break;
+		case 1:
+			this->gEngine->DrawTexture(lava2,&_pos,&centerPoint,&_size,_angle);
+			break;
+		case 2:
+			this->gEngine->DrawTexture(lava3,&_pos,&centerPoint,&_size,_angle);
+			break;
+		}
+		this->gEngine->DrawTexture(foregroundMist,&_foregroundmistPos,&centerPoint,&_size,_angle);
 
 		CorePosition * textPos = new CorePosition(10,10);
 		SDL_Color color;
@@ -63,9 +81,14 @@ void TestMap::Draw()
 		color.b = 0;
 		this->gEngine->DrawString(CoreFunctions::addIntToString("PosY: ", _pos.GetY()),textPos,color);
 	}
+}
 	/*
 void TestMap::Draw(){
 	gEngine->DrawRectangle(&_pos,&_size,0xff,0xff,0xff,0xff);
 	DefaultDraw();
 }
 */
+
+CoreColor TestMap::GetPixel(CorePosition pos){
+	return gEngine->getPixelColor(collision->GetSurface(), pos.GetX(), pos.GetY());
+}

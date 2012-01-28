@@ -14,3 +14,5 @@ private:
 	int x;
 	int y;
 };
+
+extern CorePosition centerPoint;

@@ -68,13 +68,13 @@ void Intro::Update(float fTime)
 
 void Intro::Draw()
 {
-	this->gEngine->DrawTexture(texture,pos,&center,size,this->fade,this->fade,this->fade);
+	this->gEngine->DrawTexture(texture,pos,&centerPoint, size,-1,this->fade,this->fade,this->fade);
 	float r, g, b, a;
 	r = CoreFunctions::GenerateRandomNumberBetween(0.0F,1.0F);
 	g = CoreFunctions::GenerateRandomNumberBetween(0.0F,1.0F);
 	b = CoreFunctions::GenerateRandomNumberBetween(0.0F,1.0F);
 	a = 1.0F;
-	this->gEngine->DrawTexture(snake,snakepos,&center,snakesize,rotation,r,g,b,a);
+	this->gEngine->DrawTexture(snake,snakepos,&centerPoint, snakesize ,rotation,r,g,b,a);
 }
 
 bool Intro::finishedIntro()

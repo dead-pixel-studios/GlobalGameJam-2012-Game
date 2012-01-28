@@ -7,8 +7,11 @@ public:
 	TestMap();
 	void Update(float);
 	void Draw();
+
+	CoreColor GetPixel(CorePosition pos);
 private:
-	float lastUpdate;
+	float lastMistScroll;
+	float lastLavaChange;
 	CorePosition _backgroundmistPos;
 	CorePosition _foregroundmistPos;
 
@@ -20,4 +23,6 @@ private:
 	OpenGLTexture * lava1;
 	OpenGLTexture * lava2;
 	OpenGLTexture * lava3;
+
+	int lavaStep;
 };

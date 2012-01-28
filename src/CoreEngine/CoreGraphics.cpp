@@ -1,6 +1,8 @@
 #include "CoreGraphics.h"
 #include <iostream>
 
+CorePosition centerPoint(-1,-1);
+
 CoreGraphics* CoreGraphics::pinstance = 0;
 CoreGraphics* CoreGraphics::Instance () {
 	if(pinstance == 0) { pinstance = new CoreGraphics; pinstance->Init(); }
