@@ -1,5 +1,5 @@
-#include "SpriteBase.h"
 #include "Universe.h"
+#include "SpriteBase.h"
 
 SpriteBase::SpriteBase(){
 	_angle=0;
@@ -27,4 +27,8 @@ CoreColor SpriteBase::GetPixel(CorePosition pos){
 
 bool SpriteBase::GetVisible(){
 	return _visible;
+}
+
+SpriteSet SpriteBase::CollisionDetect(){
+	return Universe::Instance()->CollisionDetect(_pos, _size, this);
 }

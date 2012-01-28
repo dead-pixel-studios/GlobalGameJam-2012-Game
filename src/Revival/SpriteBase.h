@@ -1,8 +1,15 @@
 #pragma once
 
 #include "../CoreEngine/CoreGraphics.h"
+#include "Universe.h"
+#include <set>
 
 class CoreGraphics;
+class SpriteBase;
+
+typedef std::set<SpriteBase*> SpriteSet;
+typedef SpriteSet::iterator SpriteItr;
+typedef std::set<SDLKey> KeySet;
 
 class SpriteBase{
 protected:
@@ -23,6 +30,7 @@ protected:
 	void DefaultDraw();
 	
 	bool IsKeyDown(SDLKey key);
+	SpriteSet CollisionDetect();
 public:
 	SpriteBase();
 
