@@ -18,20 +18,29 @@ Player::Player(){
 
 	_visible=true;
 
-	_currentspeed=0;
+	this->currentspeed = 0;
 }
 
 void Player::Update(float delta){
+
+	float move = 0.0F;
 	if(IsKeyDown(SDLK_RIGHT)){
-		_pos.SetX(_pos.GetX()+1);
-		_pos.SetY(0);
-		if(_pos.GetY()>=0) _pos.SetY(0);
+		//_visible=false;
+		//_hitFloor=false;
+		// 
+		//_pos.SetX(_pos.GetX()+1);
+		//_pos.SetY(0);
+		move = MAX_PIXELS_SPEED_SECS * delta * MOVEMENT_FORWARD;
 	}
 	if(IsKeyDown(SDLK_LEFT)){
-		_pos.SetX(_pos.GetX()-1);
-		_pos.SetY(0);
-		if(_pos.GetY()>=0) _pos.SetY(0);
+		//_visible=false;
+		//_hitFloor=false;
+		//_pos.SetX(_pos.GetX()-1);
+		//_pos.SetY(0);
+		move = MAX_PIXELS_SPEED_SECS * delta * MOVEMENT_BACKWARD;
 	}
+	_pos.SetX(_pos.GetX() + move);
+
 	CorePosition lpoint1=LandPoint(_point1);
 	CorePosition lpoint2=LandPoint(_point2);
 	_lpoint1=lpoint1;
@@ -40,8 +49,6 @@ void Player::Update(float delta){
 	_pos=CorePosition(lpoint1.GetX()-50, lpoint1.GetY()-_size.GetHeight());
 
 	double angle=atan2((double)lpoint2.GetY() - lpoint1.GetY(), (double)lpoint2.GetX() - lpoint1.GetX()) * 180 / 3.14159;
-	if(angle>60.0) angle=60.0;
-	if(angle<-60.0) angle=-60.0;
 	if(angle<=0)angle+=360.0;
 	_angle=angle;
 }

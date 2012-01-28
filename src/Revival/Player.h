@@ -13,7 +13,7 @@ private:
 	static const int MOVEMENT_BACKWARD = -1;
 
 	static const int MAX_PIXELS_SPEED_SECS = 2;
-	float _currentspeed;
+	float currentspeed;
 
 	bool WorldCollisionCheck();
 	CorePosition LandPoint(CorePosition point);
