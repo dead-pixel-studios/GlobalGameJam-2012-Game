@@ -8,6 +8,7 @@ Universe* Universe::Instance () {
 }
 
 void Universe::Init() {
+	currentKeyStatus=SDLK_UNKNOWN;
 	AddSprite(new TestSprite());
 }
 
@@ -19,7 +20,7 @@ void Universe::Update(float fTime)
 {
 	for(SpriteItr i=_sprites.begin(); i!=_sprites.end(); ++i){
 		SpriteBase *ptr = *i;
-		ptr->Update();
+		ptr->Update(fTime);
 	}
 }
 

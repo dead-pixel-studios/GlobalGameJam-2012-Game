@@ -8,7 +8,8 @@ class SpriteBase{
 protected:
 	CorePosition _pos;
 	CorePosition _origin;
-	int _angle;
+	CoreSize _size;
+	float _angle;
 	CorePosition _deltaPos;
 	int _deltaAngle;
 
@@ -16,9 +17,11 @@ protected:
 	OpenGLTexture *texture;
 
 	friend class SpriteZCompare;
+	
+	void DefaultDraw();
 public:
 	SpriteBase();
 
-	virtual void Update()=0;
-	virtual void Draw()=0;
+	virtual void Update(float deltaTime)=0;
+	virtual void Draw() {DefaultDraw();}
 };

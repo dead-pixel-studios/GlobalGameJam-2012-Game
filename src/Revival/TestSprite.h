@@ -8,6 +8,5 @@ private:
 	float rotation;
 public:
 	TestSprite();
-	void Draw();
-	void Update();
+	void Update(float);
 };
