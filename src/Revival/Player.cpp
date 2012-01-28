@@ -49,7 +49,6 @@ void Player::Update(float delta){
 void Player::Draw(){
 	CorePosition cpoint1=_lpoint1-Universe::Instance()->_worldOffset;
 	CorePosition cpoint2=_lpoint1-Universe::Instance()->_worldOffset;
-	std::cout << cpoint1.GetX() << ':' << cpoint1.GetY() << std::endl;
 	gEngine->DrawRectangle(&cpoint1, &sz33 ,0xff,0,0,0xff);
 	gEngine->DrawRectangle(&cpoint2, &sz33 ,0xff,0,0,0xff);
 	DefaultDraw();
@@ -76,13 +75,12 @@ CorePosition Player::LandPoint(CorePosition point){
 	startPoint.SetX(_pos.GetX()+point.GetX());
 	while(!hit){
 		startPoint.SetY(startPoint.GetY()+1);
-		if(startPoint.GetY()>6000) break; // don't go on forever, give up after 1024 down
+		if(startPoint.GetY()>6000) break; // don't go on forever, give up after 6000 down
 
 		CoreColor pxl=Universe::Instance()->_currentMap->GetPixel(startPoint);
 		Uint32 col=pxl.rgba();
 
 		hit=(col==0x000000ff);
 	}
-	std::cout << startPoint.GetX() << ':' << startPoint.GetY() << std::endl;
 	return startPoint;
 }
