@@ -10,11 +10,12 @@
 #include "CoreFunctions.h"
 #include "CoreSize.h"
 #include "CorePosition.h"
-#include "CoreColor.h"
 
 #include <string>
 
 using namespace std;
+
+class CoreColor;
 
 class CoreGraphics
 {
@@ -48,3 +49,4 @@ private:
 	Uint32 getPixel(SDL_Surface * surface, int x, int y);
 };
 
+#include "CoreColor.h"

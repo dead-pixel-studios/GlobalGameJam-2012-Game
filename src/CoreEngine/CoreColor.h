@@ -1,4 +1,5 @@
 #pragma once
+#include "CoreGraphics.h"
 
 class CoreColor {
 public:
