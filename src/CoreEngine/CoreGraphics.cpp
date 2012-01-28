@@ -76,13 +76,13 @@ void CoreGraphics::DrawRectangle(CorePosition * position, CoreSize * size, int r
 	glDisable2D();
 }
 
-void CoreGraphics::DrawTexture(OpenGLTexture * texture, CorePosition * position, CoreSize * size, float rotation)
+void CoreGraphics::DrawTexture(OpenGLTexture * texture, CorePosition * position, CoreSize * size, float rotation, float red, float green, float blue, float alpha)
 {
 	glEnable2D();
 
 	glBindTexture( GL_TEXTURE_2D, texture->Texture());
 
-	glColor4f(1.0f,1.0f,1.0f,1.0f);
+	glColor4f(red,green,blue,alpha);
 
 	if(rotation > -1) {
 		GLfloat center_x = position->GetX()+(GLfloat)(size->GetWidth()*0.5);

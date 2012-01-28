@@ -28,4 +28,6 @@ private:
 	float lastUpdate;
 	float rotation;
 	bool haveFinishedIntro;
+	bool fadeIn;
+float fade;
 };

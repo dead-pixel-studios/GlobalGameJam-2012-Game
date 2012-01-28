@@ -22,7 +22,7 @@ public:
 	void StartFrame();
 	void EndFrame();
 	OpenGLTexture * CreateTexture(string textureLocation);
-	void DrawTexture(OpenGLTexture * texture, CorePosition * position, CoreSize * size, float rotation = -1);
+	void DrawTexture(OpenGLTexture * texture, CorePosition * position, CoreSize * size, float rotation = -1, float red = 1.0F, float green = 1.0F, float blue = 1.0F, float alpha = 1.0F);
 	void DrawString(string str, CorePosition * position, SDL_Color color);
 	void DrawRectangle(CorePosition * position, CoreSize * size, int r, int g, int b, int a);
 	CoreSize * GetScreenSize() { return ScreenSize; }

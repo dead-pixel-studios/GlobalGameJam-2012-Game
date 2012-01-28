@@ -105,3 +105,8 @@ SDL_Color CoreFunctions::ConvertColorNodeToSDLColor(pugi::xml_node ColorNode)
 
 	return retColor;
 }
+
+float CoreFunctions::GenerateRandomNumberBetween(float min, float max)
+{
+	return (float)rand()/(float)RAND_MAX;
+}

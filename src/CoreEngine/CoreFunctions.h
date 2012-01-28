@@ -34,6 +34,7 @@ public:
 	static GLenum PixelFormatToTextureFormat(SDL_PixelFormat * PixelFormat);
 	static int Round(double rnd);
 	static int NextPowerOf2(int val);
+	static float GenerateRandomNumberBetween(float min, float max);
 	static string addIntToString(string mainString, int num);
 	static string ConvertIntToString(int convert);
 	static string GetAppPath();
