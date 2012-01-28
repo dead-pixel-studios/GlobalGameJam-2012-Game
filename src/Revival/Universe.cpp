@@ -13,7 +13,8 @@ void Universe::Init() {
 	//AddSprite(new TestSprite());
 	_currentMap=new TestMap();
 	AddSprite(_currentMap);
-	AddSprite(new Player());
+	_focus=new Player();
+	AddSprite(_focus);
 }
 
 void Universe::AddSprite(SpriteBase *sprite){
@@ -22,6 +23,10 @@ void Universe::AddSprite(SpriteBase *sprite){
 
 void Universe::Update(float fTime)
 {
+	CorePosition focusPos=_focus->GetPosition();
+	focusPos.SetX(focusPos.GetX()+512);
+	focusPos.SetY(focusPos.GetY()+384);
+	_worldOffset=focusPos;
 	for(SpriteItr i=_sprites.begin(); i!=_sprites.end(); ++i){
 		SpriteBase *ptr = *i;
 		ptr->Update(fTime);

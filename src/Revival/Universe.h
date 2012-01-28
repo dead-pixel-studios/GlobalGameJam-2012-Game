@@ -20,6 +20,9 @@ public:
 	bool IsKeyDown(SDLKey key);
 
 	SpriteBase *_currentMap;
+	SpriteBase *_focus;
+
+	CorePosition _worldOffset;
 protected:
 	Universe(void) {};
 	Universe(const Universe&);
