@@ -119,6 +119,53 @@ void CoreGraphics::DrawTexture(OpenGLTexture * texture, CorePosition * position,
 	glDisable2D();
 }
 
+void CoreGraphics::DrawTextureFrame(OpenGLTexture * texture, CorePosition * position, CorePosition * origin, CoreSize * size, float rotation, int totalframes, int currentframe, float red, float green, float blue, float alpha )
+{
+
+	GLfloat  frameWidth = 1.0 /  totalframes;
+
+	GLfloat offset1 = currentframe * frameWidth;
+	GLfloat offset2 = (currentframe + 1) * frameWidth;
+
+	glEnable2D();
+
+	glBindTexture( GL_TEXTURE_2D, texture->Texture());
+
+	glColor4f(red,green,blue,alpha);
+
+	if(rotation > -1) {
+		GLfloat center_x, center_y;
+		if(origin->GetX()==-1 && origin->GetY()==-1){
+			center_x = position->GetX()+(GLfloat)(size->GetWidth()*0.5);
+			center_y = position->GetY()+(GLfloat)(size->GetHeight()*0.5);
+		}else{
+			center_x=position->GetX()+origin->GetX();
+			center_y=position->GetY()+origin->GetY();
+		}
+
+		glTranslatef( center_x, center_y, 0 );
+		glRotatef( rotation, 0, 0, 1 );
+		glTranslatef( -center_x, -center_y, 0 );
+	}
+
+	glBegin(GL_QUADS);
+
+		glTexCoord2f( offset1, 1 ); // left skewed down
+		glVertex2i(position->GetX(),position->GetY()+size->GetHeight());
+
+		glTexCoord2f( offset2, 1 );
+		glVertex2i(position->GetX()+size->GetWidth(),position->GetY()+size->GetHeight());
+
+		glTexCoord2f( offset2, 0 );
+		glVertex2d(position->GetX()+size->GetWidth(),position->GetY());
+
+		glTexCoord2f( offset1, 0 );
+		glVertex2d(position->GetX(),position->GetY());
+	glEnd();
+
+	glDisable2D();
+}
+
 void CoreGraphics::DrawString(string str, CorePosition * position, SDL_Color color)
 {
 	SDL_Surface * textSurface = TTF_RenderText_Solid(defaultFont, str.c_str(), color);

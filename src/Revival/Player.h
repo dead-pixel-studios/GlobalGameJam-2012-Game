@@ -18,6 +18,10 @@ private:
 	float maxpixels_persecond_speed;
 	float currentspeed;
 
+	float currentframe;
+	CoreSize framesize;
+	int lastframems;
+
 	float jump_time_length_secs;
 	float jump_current_velocity_pixels_sec;
 	float jump_elapsed;
@@ -25,6 +29,7 @@ private:
 
 	bool WorldCollisionCheck();
 	CorePosition LandPoint(CorePosition point);
+	int tits;
 public:
 	Player();
 	void Update(float dT);

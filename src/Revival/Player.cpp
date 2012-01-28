@@ -8,31 +8,37 @@
 CoreSize sz33(3,3);
 
 Player::Player(){
-	maxpixels_persecond_speed = 0.8F;
 
-	texture = gEngine->CreateTexture(CoreFunctions::GetAppPath() + "/data/character.png");
-	texture->Load();
-	_size=CoreSize(145,250);
-	_pos=CorePosition(0,0);
+	this->tits = 0;
+	this->maxpixels_persecond_speed = 0.8F;
 
-	_point1=CorePosition(50, 250);
-	_point2=CorePosition(100,250);
-	_origin=_point1;
+	this->texture = gEngine->CreateTexture(CoreFunctions::GetAppPath() + "/data/Walking/FinalWalkRight.bmp");
+	this->texture->Load();
+	
+	this->_size=CoreSize(145,250);
+	this->_pos=CorePosition(0,0);
+
+	this->_point1=CorePosition(50, 250);
+	this->_point2=CorePosition(100,250);
+	this->_origin=_point1;
 
 	this->jump_time_length_secs = 5.0F; // how long it takes to jump
 	this->jump_current_velocity_pixels_sec = 1.0F; // current jump velocity (pixels per second) (for acceleration)
 	this->jump_elapsed = 0.0F; // current jump
 	this->jumping = false;
 
-	_visible=true;
+	this->_visible=true;
 
-	Gravity = 2.5;
-	Velocity= 0;
+	this->Gravity = 2.5;
+	this->Velocity= 0;
 
 	this->currentspeed = 0;
+	this->currentframe = 0;
+	this->framesize = CoreSize(_size.GetWidth(), _size.GetHeight());
 }
 
 void Player::Update(float delta){
+
 
 	float move = 0.0F;
 	if(IsKeyDown(SDLK_RIGHT)){
@@ -106,11 +112,27 @@ void Player::Update(float delta){
 }
 
 void Player::Draw(){
+
+
+
 	CorePosition cpoint1=_lpoint1-Universe::Instance()->_worldOffset;
 	CorePosition cpoint2=_lpoint1-Universe::Instance()->_worldOffset;
 
+	SDL_Rect * bacon = new SDL_Rect();
+	bacon->h = 0.1;
+	bacon->w = 0.1;
+	bacon->x = 0.1;
+	bacon->y = 0.1;
+
+	//SDL_SetClipRect(this->texture->GetSurface(), bacon);
+
 	// Draw the sprite
-	DefaultDraw();
+	if(_visible){
+		CorePosition drawPosition=_pos;
+		drawPosition.SetX(drawPosition.GetX()-Universe::Instance()->_worldOffset.GetX());
+		drawPosition.SetY(drawPosition.GetY()-Universe::Instance()->_worldOffset.GetY());
+		this->gEngine->DrawTextureFrame(texture,&drawPosition,&_origin,&_size,_angle,8,tits++%8);
+	}
 
 	// Draw the two ray-tracing dots (over the sprite)
 	gEngine->DrawRectangle(&cpoint1, &sz33 ,0xff,0,0,0xff);
