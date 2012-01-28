@@ -1,5 +1,5 @@
-#include "TestSprite.h"
 #include "Universe.h"
+#include "TestSprite.h"
 
 TestSprite::TestSprite(){
 	this->rotation = 0.0F;

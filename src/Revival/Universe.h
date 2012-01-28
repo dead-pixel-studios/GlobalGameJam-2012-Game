@@ -13,6 +13,9 @@ public:
 	void Draw();
 
 	void AddSprite(SpriteBase *sprite);
+	void RemoveAndDeleteSprite(SpriteBase *sprite);
+	void RemoveAllSprites(bool preserverPlayer=false);
+	SpriteSet CollisionDetect(CorePosition pos, CoreSize box, SpriteBase *ignore=NULL);
 
 	void KeyDown(SDLKey key);
 	void KeyUp(SDLKey key);
@@ -28,10 +31,6 @@ protected:
 	Universe(const Universe&);
 	Universe& operator=(const Universe&);
 private:
-	typedef std::set<SpriteBase*> SpriteSet;
-	typedef SpriteSet::iterator SpriteItr;
-	typedef std::set<SDLKey> KeySet;
-
 	static Universe* pinstance;
 	void Init();
 	float rotation;
