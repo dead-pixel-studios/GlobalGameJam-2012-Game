@@ -9,10 +9,10 @@ public:
 
 	Uint32 rgba(){
 		Uint8 arr[4];
-		arr[0]=r;
-		arr[1]=g;
-		arr[2]=b;
-		arr[3]=a;
+		arr[3]=r;
+		arr[2]=g;
+		arr[1]=b;
+		arr[0]=a;
 
 		return *reinterpret_cast<Uint32*>(arr);
 	}
