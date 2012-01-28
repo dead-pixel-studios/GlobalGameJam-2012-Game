@@ -30,6 +30,8 @@ private:
 	bool WorldCollisionCheck();
 	CorePosition LandPoint(CorePosition point);
 	int tits;
+
+	int _health;
 public:
 	Player();
 	void Update(float dT);
