@@ -15,4 +15,18 @@ private:
 	int y;
 };
 
+inline CorePosition operator+(CorePosition lhs, CorePosition &rhs){
+	CorePosition ret;
+	ret.SetX(lhs.GetX() + rhs.GetX());
+	ret.SetY(lhs.GetY() + rhs.GetY());
+	return ret;
+}
+
+inline CorePosition operator-(CorePosition lhs, CorePosition &rhs){
+	CorePosition ret;
+	ret.SetX(lhs.GetX() - rhs.GetX());
+	ret.SetY(lhs.GetY() - rhs.GetY());
+	return ret;
+}
+
 extern CorePosition centerPoint;

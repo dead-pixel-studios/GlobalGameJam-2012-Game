@@ -42,14 +42,16 @@ void Player::Update(float){
 	_visible=true;
 
 	double angle=atan2((double)lpoint2.GetY() - lpoint1.GetY(), (double)lpoint2.GetX() - lpoint1.GetX()) * 180 / 3.14159;
-	std::cout << angle << std::endl;
 	if(angle<=0)angle+=360.0;
 	_angle=angle;
 }
 
 void Player::Draw(){
-	gEngine->DrawRectangle(&_lpoint1, &sz33 ,0xff,0,0,0xff);
-	gEngine->DrawRectangle(&_lpoint2, &sz33 ,0xff,0,0,0xff);
+	CorePosition cpoint1=_lpoint1-Universe::Instance()->_worldOffset;
+	CorePosition cpoint2=_lpoint1-Universe::Instance()->_worldOffset;
+	std::cout << cpoint1.GetX() << ':' << cpoint1.GetY() << std::endl;
+	gEngine->DrawRectangle(&cpoint1, &sz33 ,0xff,0,0,0xff);
+	gEngine->DrawRectangle(&cpoint2, &sz33 ,0xff,0,0,0xff);
 	DefaultDraw();
 }
 

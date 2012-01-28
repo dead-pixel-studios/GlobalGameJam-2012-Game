@@ -29,7 +29,7 @@ public:
 	virtual void Update(float deltaTime)=0;
 	virtual void Draw() {DefaultDraw();}
 
-	CoreColor GetPixel(CorePosition pos);
+	virtual CoreColor GetPixel(CorePosition pos);
 
 	CorePosition GetPosition() {return _pos;}
 	CoreSize GetSize() {return _size;}

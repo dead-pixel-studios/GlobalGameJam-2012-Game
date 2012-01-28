@@ -1,4 +1,5 @@
 #include "TestMap.h"
+#include "Universe.h"
 
 TestMap::TestMap()
 {
@@ -38,14 +39,14 @@ TestMap::TestMap()
 
 void TestMap::Update(float fTime)
 {
-	if(fTime-lastMistScroll > 10) {
+	/*if(fTime-lastMistScroll > 10) {
 		lastMistScroll = fTime;
 		if(_pos.GetY()>0-768) {
 			_pos.SetY(_pos.GetY()-1);
 		}
 		_backgroundmistPos.SetX(_backgroundmistPos.GetX() - 1);
 		_foregroundmistPos.SetX(_foregroundmistPos.GetX() - 2);
-	}
+	}*/
 
 	if(fTime-lastLavaChange > 100) {
 		lastLavaChange = fTime;
@@ -57,19 +58,21 @@ void TestMap::Update(float fTime)
 void TestMap::Draw()
 {
 	if(_visible) {
-		this->gEngine->DrawTexture(texture,&_pos,&centerPoint,&_size,_angle);
+		CorePosition ofs=Universe::Instance()->_worldOffset;
+		CorePosition adjpos=_pos-ofs;
+		this->gEngine->DrawTexture(texture,&adjpos,&centerPoint,&_size,_angle);
 		this->gEngine->DrawTexture(backgroundMist,&_backgroundmistPos,&centerPoint,&_size,_angle);
-		this->gEngine->DrawTexture(foreground,&_pos,&centerPoint,&_size,_angle);
+		this->gEngine->DrawTexture(foreground,&adjpos,&centerPoint,&_size,_angle);
 
 		switch(lavaStep) {
 		case 0:
-			this->gEngine->DrawTexture(lava1,&_pos,&centerPoint,&_size,_angle);
+			this->gEngine->DrawTexture(lava1,&adjpos,&centerPoint,&_size,_angle);
 			break;
 		case 1:
-			this->gEngine->DrawTexture(lava2,&_pos,&centerPoint,&_size,_angle);
+			this->gEngine->DrawTexture(lava2,&adjpos,&centerPoint,&_size,_angle);
 			break;
 		case 2:
-			this->gEngine->DrawTexture(lava3,&_pos,&centerPoint,&_size,_angle);
+			this->gEngine->DrawTexture(lava3,&adjpos,&centerPoint,&_size,_angle);
 			break;
 		}
 		this->gEngine->DrawTexture(foregroundMist,&_foregroundmistPos,&centerPoint,&_size,_angle);

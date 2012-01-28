@@ -24,8 +24,8 @@ void Universe::AddSprite(SpriteBase *sprite){
 void Universe::Update(float fTime)
 {
 	CorePosition focusPos=_focus->GetPosition();
-	focusPos.SetX(focusPos.GetX()+512);
-	focusPos.SetY(focusPos.GetY()+384);
+	focusPos.SetX(focusPos.GetX()-512);
+	focusPos.SetY(focusPos.GetY()-384);
 	_worldOffset=focusPos;
 	for(SpriteItr i=_sprites.begin(); i!=_sprites.end(); ++i){
 		SpriteBase *ptr = *i;
