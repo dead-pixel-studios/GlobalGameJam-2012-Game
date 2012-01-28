@@ -27,18 +27,9 @@ void Player::Update(float delta){
 
 	float move = 0.0F;
 	if(IsKeyDown(SDLK_RIGHT)){
-		//_visible=false;
-		//_hitFloor=false;
-		// 
-		//_pos.SetX(_pos.GetX()+1);
-		//_pos.SetY(0);
 		move = maxpixels_persecond_speed * delta * MOVEMENT_FORWARD;
 	}
 	if(IsKeyDown(SDLK_LEFT)){
-		//_visible=false;
-		//_hitFloor=false;
-		//_pos.SetX(_pos.GetX()-1);
-		//_pos.SetY(0);
 		move = maxpixels_persecond_speed * delta * MOVEMENT_BACKWARD;
 	}
 	_pos.SetX(_pos.GetX() + move);
@@ -51,6 +42,8 @@ void Player::Update(float delta){
 	_pos=CorePosition(lpoint1.GetX()-50, lpoint1.GetY()-_size.GetHeight());
 
 	double angle=atan2((double)lpoint2.GetY() - lpoint1.GetY(), (double)lpoint2.GetX() - lpoint1.GetX()) * 180 / 3.14159;
+	if(angle<60.0) angle=60.0;
+	if(angle>-60.0) angle=-60.0;
 	if(angle<=0)angle+=360.0;
 	_angle=angle;
 }
