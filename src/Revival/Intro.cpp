@@ -27,6 +27,8 @@ void Intro::Init() {
 	this->haveFinishedIntro = false;
 	this->fadeIn = true;
 	this->fade = 0.0F;
+
+	this->player1 = new CoreController(1);
 }
 
 void Intro::Update(float fTime)
@@ -44,15 +46,21 @@ void Intro::Update(float fTime)
 			}
 		}
 		else {
-		this->rotation += 1.0F;
-		if(this->rotation >= 360) {
-			this->rotation = 0;
-		}
+			this->rotation += 1.0F;
+			if(this->rotation >= 360) {
+				this->rotation = 0;
+			}
 		}
 	}
 
 	if(Universe::Instance()->IsKeyDown(SDLK_SPACE)) {
 		this->haveFinishedIntro = true;
+	}
+
+	if(player1->IsConnected()) {
+		if(player1->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_START) {
+			this->haveFinishedIntro = true;
+		}
 	}
 }
 
