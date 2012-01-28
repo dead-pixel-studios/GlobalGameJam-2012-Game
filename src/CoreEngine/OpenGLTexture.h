@@ -14,6 +14,7 @@ public:
 	OpenGLTexture(SDL_Surface * surface);
 	bool Load();
 	GLuint Texture() { return texture; }
+	int GetPixel(int x, int y);
 	~OpenGLTexture();
 private:
 	string textureLocation;

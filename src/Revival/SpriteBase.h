@@ -13,6 +13,8 @@ protected:
 	CorePosition _deltaPos;
 	int _deltaAngle;
 
+	bool _visible;
+
 	CoreGraphics *gEngine;
 	OpenGLTexture *texture;
 
@@ -26,4 +28,6 @@ public:
 
 	virtual void Update(float deltaTime)=0;
 	virtual void Draw() {DefaultDraw();}
+
+	int GetPixel(CorePosition pos);
 };

@@ -18,6 +18,8 @@ public:
 	void KeyUp(SDLKey key);
 	
 	bool IsKeyDown(SDLKey key);
+
+	SpriteBase *_currentMap;
 protected:
 	Universe(void) {};
 	Universe(const Universe&);

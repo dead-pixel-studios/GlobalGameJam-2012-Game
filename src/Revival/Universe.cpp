@@ -1,5 +1,7 @@
 #include "Universe.h"
 #include "TestSprite.h"
+#include "TestMap.h"
+#include "Player.h"
 
 Universe* Universe::pinstance = 0;
 Universe* Universe::Instance () {
@@ -8,7 +10,10 @@ Universe* Universe::Instance () {
 }
 
 void Universe::Init() {
-	AddSprite(new TestSprite());
+	//AddSprite(new TestSprite());
+	_currentMap=new TestMap();
+	AddSprite(_currentMap);
+	AddSprite(new Player());
 }
 
 void Universe::AddSprite(SpriteBase *sprite){
