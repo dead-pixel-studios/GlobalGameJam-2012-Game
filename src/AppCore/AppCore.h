@@ -3,6 +3,7 @@
 #include "../CoreEngine/CoreGraphics.h"
 #include "../CoreEngine/CoreFunctions.h"
 #include "../Revival/Universe.h"
+#include "../Revival/Intro.h"
 
 class CoreGraphics;
 
@@ -27,5 +28,6 @@ private:
 	bool quit;
 
 	Universe * universe;
+	Intro * intro;
 	void Init();
 };
