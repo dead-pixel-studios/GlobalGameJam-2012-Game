@@ -3,6 +3,37 @@
 #include "TestMap.h"
 #include "Player.h"
 
+SDL_bool SDL_HasIntersection(const SDL_Rect * A, const SDL_Rect * B)
+{
+    int Amin, Amax, Bmin, Bmax;
+
+    /* Horizontal intersection */
+    Amin = A->x;
+    Amax = Amin + A->w;
+    Bmin = B->x;
+    Bmax = Bmin + B->w;
+    if (Bmin > Amin)
+        Amin = Bmin;
+    if (Bmax < Amax)
+        Amax = Bmax;
+    if (Amax <= Amin)
+        return SDL_FALSE;
+
+    /* Vertical intersection */
+    Amin = A->y;
+    Amax = Amin + A->h;
+    Bmin = B->y;
+    Bmax = Bmin + B->h;
+    if (Bmin > Amin)
+        Amin = Bmin;
+    if (Bmax < Amax)
+        Amax = Bmax;
+    if (Amax <= Amin)
+        return SDL_FALSE;
+
+    return SDL_TRUE;
+}
+
 Universe* Universe::pinstance = 0;
 Universe* Universe::Instance () {
 	if(pinstance == 0) { pinstance = new Universe; pinstance->Init(); }
@@ -57,4 +88,29 @@ void Universe::KeyUp(SDLKey key){
 
 bool Universe::IsKeyDown(SDLKey key){
 	return _keys.count(key);
+}
+
+SpriteSet Universe::CollisionDetect(CorePosition pos, CoreSize size, SpriteBase *ignore){
+	SpriteSet ret;
+	SDL_Rect priRect;
+	priRect.x=pos.GetX();
+	priRect.y=pos.GetY();
+	priRect.w=size.GetWidth();
+	priRect.h=size.GetHeight();
+	for(SpriteItr i=_sprites.begin();i!=_sprites.end();++i){
+		if(*i!=ignore){
+			SpriteBase *sprite=*i;
+			if(sprite->GetVisible()){
+				SDL_Rect secRect;
+				secRect.x=sprite->GetPosition().GetX();
+				secRect.y=sprite->GetPosition().GetY();
+				secRect.w=sprite->GetSize().GetWidth();
+				secRect.h=sprite->GetSize().GetHeight();
+				if(SDL_HasIntersection(&priRect, &secRect)){
+					ret.insert(sprite);
+				}
+			}
+		}
+	}
+	return ret;
 }

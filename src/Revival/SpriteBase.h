@@ -33,4 +33,5 @@ public:
 
 	CorePosition GetPosition() {return _pos;}
 	CoreSize GetSize() {return _size;}
+	bool GetVisible();
 };
