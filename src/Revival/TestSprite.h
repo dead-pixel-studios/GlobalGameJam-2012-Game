@@ -2,8 +2,6 @@
 
 class TestSprite : public SpriteBase{
 private:
-	CoreGraphics * gEngine;
-	OpenGLTexture * texture1;
 	void rotateP();
 	void rotateM();
 

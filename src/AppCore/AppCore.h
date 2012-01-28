@@ -12,6 +12,7 @@ public:
 	static AppCore* Instance();
 	void Start();
 	void HandleKeyDown(SDL_Event keyDownEvent);
+	void HandleKeyUp(SDL_Event keyUpEvent);
 	void Update(float Time);
 	bool DoQuit() { return quit; }
 protected:

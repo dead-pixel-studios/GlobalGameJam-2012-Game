@@ -2,14 +2,14 @@
 #include "Universe.h"
 
 TestSprite::TestSprite(){
-	this->gEngine = CoreGraphics::Instance();
 	this->rotation = 0.0F;
 
-	texture1 = gEngine->CreateTexture(CoreFunctions::GetAppPath() + "/data/bloogy.bmp");
-	texture1->Load();
+	texture = gEngine->CreateTexture(CoreFunctions::GetAppPath() + "/data/bloogy.bmp");
+	texture->Load();
 }
 
 void TestSprite::Update(){
+
 	switch(Universe::Instance()->currentKeyStatus) {
 	case SDLK_KP_PLUS:
 	case SDLK_LEFT:
@@ -25,7 +25,7 @@ void TestSprite::Update(){
 void TestSprite::Draw(){
 	CorePosition * cPos = new CorePosition(100,100);
 	CoreSize * cSize = new CoreSize(64,64);
-	this->gEngine->DrawTexture(texture1,cPos,cSize, this->rotation);
+	this->gEngine->DrawTexture(texture,cPos,cSize, this->rotation);
 	delete cPos;
 	delete cSize;
 }
