@@ -25,8 +25,12 @@ CoreColor SpriteBase::GetPixel(CorePosition pos){
 	return gEngine->getPixelColor(texture->GetSurface(), pos.GetX(), pos.GetY());
 }
 
-bool SpriteBase::GetVisible(){
+bool SpriteBase::IsVisible(){
 	return _visible;
+}
+
+bool SpriteBase::IsSolid(){
+	return _solid;
 }
 
 SpriteSet SpriteBase::CollisionDetect(){
