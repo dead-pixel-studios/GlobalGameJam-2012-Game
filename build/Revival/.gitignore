@@ -2,3 +2,6 @@
 /*.opensdf
 /*.sdf
 /Debug/
+/*.suo
+/*.vcxproj
+/*.vcxproj.filters
