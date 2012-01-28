@@ -42,9 +42,9 @@ void Player::Update(float delta){
 	_pos=CorePosition(lpoint1.GetX()-50, lpoint1.GetY()-_size.GetHeight());
 
 	double angle=atan2((double)lpoint2.GetY() - lpoint1.GetY(), (double)lpoint2.GetX() - lpoint1.GetX()) * 180 / 3.14159;
-	if(angle<60.0) angle=60.0;
-	if(angle>-60.0) angle=-60.0;
-	if(angle<=0)angle+=360.0;
+	if(angle>60.0) angle=60.0;
+	if(angle<-60.0) angle=-60.0;
+	if(angle<=0) angle+=360.0;
 	_angle=angle;
 }
 
