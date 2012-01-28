@@ -7,6 +7,8 @@
 CoreSize sz33(3,3);
 
 Player::Player(){
+	maxpixels_persecond_speed = 0.8F;
+
 	texture = gEngine->CreateTexture(CoreFunctions::GetAppPath() + "/data/character.png");
 	texture->Load();
 	_size=CoreSize(145,250);
@@ -30,14 +32,14 @@ void Player::Update(float delta){
 		// 
 		//_pos.SetX(_pos.GetX()+1);
 		//_pos.SetY(0);
-		move = MAX_PIXELS_SPEED_SECS * delta * MOVEMENT_FORWARD;
+		move = maxpixels_persecond_speed * delta * MOVEMENT_FORWARD;
 	}
 	if(IsKeyDown(SDLK_LEFT)){
 		//_visible=false;
 		//_hitFloor=false;
 		//_pos.SetX(_pos.GetX()-1);
 		//_pos.SetY(0);
-		move = MAX_PIXELS_SPEED_SECS * delta * MOVEMENT_BACKWARD;
+		move = maxpixels_persecond_speed * delta * MOVEMENT_BACKWARD;
 	}
 	_pos.SetX(_pos.GetX() + move);
 

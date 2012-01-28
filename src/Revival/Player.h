@@ -12,7 +12,7 @@ private:
 	static const int MOVEMENT_FORWARD = 1;
 	static const int MOVEMENT_BACKWARD = -1;
 
-	static const int MAX_PIXELS_SPEED_SECS = 2;
+	float maxpixels_persecond_speed;
 	float currentspeed;
 
 	bool WorldCollisionCheck();
