@@ -2,6 +2,7 @@
 
 #include "../CoreEngine/CoreGraphics.h"
 #include "SpriteBase.h"
+#include "Map.h"
 #include <set>
 
 class CoreGraphics;
@@ -22,7 +23,7 @@ public:
 	
 	bool IsKeyDown(SDLKey key);
 
-	SpriteBase *_currentMap;
+	Map *_currentMap;
 	SpriteBase *_focus;
 
 	CorePosition _worldOffset;

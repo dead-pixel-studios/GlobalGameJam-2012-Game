@@ -2,8 +2,9 @@
 
 #include "SpriteBase.h"
 #include "Powerup.h"
+#include "Map.h"
 
-class TestMap : public SpriteBase {
+class TestMap :  public Map {
 public:
 	TestMap();
 	void Update(float);

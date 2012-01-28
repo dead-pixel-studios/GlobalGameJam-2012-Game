@@ -35,7 +35,7 @@ TestMap::TestMap()
 	_backgroundmistPos=CorePosition(0,0);
 	_foregroundmistPos=CorePosition(0,0);
 
-	_pwrUp = new Powerup(CorePosition(800,1080));
+	_pwrUp = new Powerup(CorePosition(800,1080), PowerupType::Freeze);
 	Universe::Instance()->AddSprite(_pwrUp);
 
 	_visible=true;

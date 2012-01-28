@@ -2,7 +2,7 @@
 #include "Powerup.h"
 #include "Player.h"
 
-Powerup::Powerup(CorePosition pos)
+Powerup::Powerup(CorePosition pos, PowerupType::Enum type)
 {
 	texture = gEngine->CreateTexture(CoreFunctions::GetAppPath() + "/data/power-ups/icon-freeze.png");
 	texture->Load();
