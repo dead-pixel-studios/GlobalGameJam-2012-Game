@@ -201,3 +201,38 @@ void CoreGraphics::EndFrame()
 {
 	SDL_GL_SwapBuffers();
 }
+
+CoreColor * CoreGraphics::getPixelColor(SDL_Surface * surface, int x, int y) {
+	Uint8 r,g,b,a;
+	SDL_LockSurface(surface);
+	Uint32 pixelPointer = getPixel(surface,x,y);
+	SDL_GetRGBA(pixelPointer, surface->format, &r,&g,&b,&a);
+	SDL_UnlockSurface(surface);
+	CoreColor * newColor = new CoreColor();
+	newColor->r = r;
+	newColor->g = g;
+	newColor->b = b;
+	newColor->a = a;
+	return newColor;
+}
+
+Uint32 CoreGraphics::getPixel(SDL_Surface * surface, int x, int y) {
+	int bpp = surface->format->BytesPerPixel;
+	/* Here p is the address to the pixel we want to retrieve */
+	Uint8 *p = (Uint8 *)surface->pixels + y * surface->pitch + x * bpp;
+	switch(bpp) {
+	case 1:
+		return *p;
+	case 2:
+		return *(Uint16 *)p;
+	case 3:
+		if(SDL_BYTEORDER == SDL_BIG_ENDIAN)
+			return p[0] << 16 | p[1] << 8 | p[2];
+		else
+			return p[0] | p[1] << 8 | p[2] << 16;
+	case 4:
+		return *(Uint32 *)p;
+	default:
+		return 0;       /* shouldn't happen, but avoids warnings */
+	}
+}
