@@ -26,9 +26,9 @@ void CoreEngine::AppLoop()
 	bool quit = false;
 	while(!quit)
 	{
-		float timeNow = (float)SDL_GetTicks();
-		float deltaTime = (timeNow - lastUpdate) / 1000.0F;
-		CoreApp->Update(timeNow);
+		float timeNow = (float)SDL_GetTicks(); // Returns the number of milliseconds since SDL library initialization
+		float deltaTime = (timeNow - lastUpdate) / 1000.0F; // delta in ms / 1000
+		CoreApp->Update(deltaTime);
 		quit = CheckEvents();
 		if(!quit) { quit = CoreApp->DoQuit(); }
 		lastUpdate = timeNow;
