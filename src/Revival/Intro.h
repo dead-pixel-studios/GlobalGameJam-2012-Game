@@ -7,7 +7,6 @@ public:
 	static Intro* Instance();
 	void Update(float fTime);
 	void Draw();
-	
 	bool finishedIntro();
 protected:
 	Intro(void) {};
