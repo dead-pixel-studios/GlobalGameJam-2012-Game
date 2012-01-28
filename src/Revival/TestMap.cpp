@@ -64,4 +64,9 @@ void TestMap::Draw()
 		color.b = 0;
 		this->gEngine->DrawString(CoreFunctions::addIntToString("PosY: ", _pos.GetY()),textPos,color);
 	}
+	/*
+void TestMap::Draw(){
+	gEngine->DrawRectangle(&_pos,&_size,0xff,0xff,0xff,0xff);
+	DefaultDraw();
 }
+*/

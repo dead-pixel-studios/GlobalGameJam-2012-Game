@@ -29,5 +29,5 @@ public:
 	virtual void Update(float deltaTime)=0;
 	virtual void Draw() {DefaultDraw();}
 
-	int GetPixel(CorePosition pos);
+	CoreColor GetPixel(CorePosition pos);
 };

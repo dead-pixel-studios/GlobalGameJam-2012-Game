@@ -1,4 +1,5 @@
 #include "CoreGraphics.h"
+#include <iostream>
 
 CoreGraphics* CoreGraphics::pinstance = 0;
 CoreGraphics* CoreGraphics::Instance () {
@@ -76,7 +77,7 @@ void CoreGraphics::DrawRectangle(CorePosition * position, CoreSize * size, int r
 	glDisable2D();
 }
 
-void CoreGraphics::DrawTexture(OpenGLTexture * texture, CorePosition * position, CoreSize * size, float rotation, float red, float green, float blue, float alpha)
+void CoreGraphics::DrawTexture(OpenGLTexture * texture, CorePosition * position, CorePosition * origin, CoreSize * size, float rotation, float red, float green, float blue, float alpha)
 {
 	glEnable2D();
 
@@ -85,8 +86,14 @@ void CoreGraphics::DrawTexture(OpenGLTexture * texture, CorePosition * position,
 	glColor4f(red,green,blue,alpha);
 
 	if(rotation > -1) {
-		GLfloat center_x = position->GetX()+(GLfloat)(size->GetWidth()*0.5);
-		GLfloat center_y = position->GetY()+(GLfloat)(size->GetHeight()*0.5);
+		GLfloat center_x, center_y;
+		if(origin->GetX()==-1 && origin->GetY()==-1){
+			center_x = position->GetX()+(GLfloat)(size->GetWidth()*0.5);
+			center_y = position->GetY()+(GLfloat)(size->GetHeight()*0.5);
+		}else{
+			center_x=position->GetX()+origin->GetX();
+			center_y=position->GetY()+origin->GetY();
+		}
 
 		glTranslatef( center_x, center_y, 0 );
 		glRotatef( rotation, 0, 0, 1 );
@@ -202,21 +209,22 @@ void CoreGraphics::EndFrame()
 	SDL_GL_SwapBuffers();
 }
 
-CoreColor * CoreGraphics::getPixelColor(SDL_Surface * surface, int x, int y) {
+CoreColor CoreGraphics::getPixelColor(SDL_Surface * surface, int x, int y) {
 	Uint8 r,g,b,a;
 	SDL_LockSurface(surface);
 	Uint32 pixelPointer = getPixel(surface,x,y);
 	SDL_GetRGBA(pixelPointer, surface->format, &r,&g,&b,&a);
 	SDL_UnlockSurface(surface);
-	CoreColor * newColor = new CoreColor();
-	newColor->r = r;
-	newColor->g = g;
-	newColor->b = b;
-	newColor->a = a;
+	CoreColor newColor;
+	newColor.r = r;
+	newColor.g = g;
+	newColor.b = b;
+	newColor.a = a;
 	return newColor;
 }
 
 Uint32 CoreGraphics::getPixel(SDL_Surface * surface, int x, int y) {
+	if(x>surface->w  || y>surface->h) return 0; 
 	int bpp = surface->format->BytesPerPixel;
 	/* Here p is the address to the pixel we want to retrieve */
 	Uint8 *p = (Uint8 *)surface->pixels + y * surface->pitch + x * bpp;
