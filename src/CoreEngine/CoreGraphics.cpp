@@ -202,21 +202,22 @@ void CoreGraphics::EndFrame()
 	SDL_GL_SwapBuffers();
 }
 
-CoreColor * CoreGraphics::getPixelColor(SDL_Surface * surface, int x, int y) {
+CoreColor CoreGraphics::getPixelColor(SDL_Surface * surface, int x, int y) {
 	Uint8 r,g,b,a;
 	SDL_LockSurface(surface);
 	Uint32 pixelPointer = getPixel(surface,x,y);
 	SDL_GetRGBA(pixelPointer, surface->format, &r,&g,&b,&a);
 	SDL_UnlockSurface(surface);
-	CoreColor * newColor = new CoreColor();
-	newColor->r = r;
-	newColor->g = g;
-	newColor->b = b;
-	newColor->a = a;
+	CoreColor newColor;
+	newColor.r = r;
+	newColor.g = g;
+	newColor.b = b;
+	newColor.a = a;
 	return newColor;
 }
 
 Uint32 CoreGraphics::getPixel(SDL_Surface * surface, int x, int y) {
+	if(x>surface->w  || y>surface->h) return 0; 
 	int bpp = surface->format->BytesPerPixel;
 	/* Here p is the address to the pixel we want to retrieve */
 	Uint8 *p = (Uint8 *)surface->pixels + y * surface->pitch + x * bpp;

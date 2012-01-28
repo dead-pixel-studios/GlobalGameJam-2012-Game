@@ -15,6 +15,6 @@ bool SpriteBase::IsKeyDown(SDLKey key){
 	return Universe::Instance()->IsKeyDown(key);
 }
 
-int SpriteBase::GetPixel(CorePosition pos){
-	return texture->GetPixel(pos.GetX(), pos.GetY());
+CoreColor SpriteBase::GetPixel(CorePosition pos){
+	return gEngine->getPixelColor(texture->GetSurface(), pos.GetX(), pos.GetY());
 }

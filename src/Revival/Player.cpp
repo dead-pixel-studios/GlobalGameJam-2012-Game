@@ -7,7 +7,7 @@ Player::Player(){
 	texture = gEngine->CreateTexture(CoreFunctions::GetAppPath() + "/data/character.png");
 	texture->Load();
 	_size=CoreSize(145,250);
-	_pos=CorePosition(80,0);
+	_pos=CorePosition(0,0);
 
 	_collisionPoint=CorePosition(73, 250);
 
@@ -23,12 +23,18 @@ void Player::Update(float){
 }
 
 bool Player::WorldCollisionCheck(){
+	static Uint32 lastCol=0;
+
 	CorePosition posToCheck=_collisionPoint;
 	posToCheck.SetX(posToCheck.GetX()+_pos.GetX());
 	posToCheck.SetY(posToCheck.GetY()+_pos.GetY());
 
-	int pxl=Universe::Instance()->_currentMap->GetPixel(posToCheck);
+	CoreColor pxl=Universe::Instance()->_currentMap->GetPixel(posToCheck);
+	Uint32 col=pxl.rgba();
 
-	std::cout << pxl << std::endl;
-	return false;
+	if(col!=lastCol){
+		std::cout << 0xff000000 << ':' << col << std::endl;
+		lastCol=col;
+	}
+	return (col==0xff000000);
 }
