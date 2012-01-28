@@ -12,7 +12,7 @@ Player::Player(){
 	this->tits = 0;
 	this->maxpixels_persecond_speed = 0.8F;
 
-	this->texture = gEngine->CreateTexture(CoreFunctions::GetAppPath() + "/data/Walking/FinalWalkRight.bmp");
+	this->texture = gEngine->CreateTexture(CoreFunctions::GetAppPath() + "/data/Walking/FinalWalkRight.png");
 	this->texture->Load();
 	
 	this->_size=CoreSize(145,250);
@@ -61,8 +61,8 @@ void Player::Update(float delta){
 
 	int jump_move_y_by = 0;
 
-	//// jumping
-	//if(jumping) {
+	// jumping
+	if(jumping) {
 	//	  if (jump_elapsed < (jump_time_length_secs)) {
 	//		// starting to jump
 	//		// first third of jump animation
@@ -70,8 +70,8 @@ void Player::Update(float delta){
 	//		lpoint1.SetY(lpoint1.GetY() - jump_move_y_by);
 	//		lpoint2.SetY(lpoint2.GetY() - jump_move_y_by);
 	//	}
-	//	jump_elapsed += delta / 1000;
-	//}
+		jump_elapsed += delta / 1000;
+	}
 
 	//if(jumping) {
 	//	Velocity = -14.0F;
