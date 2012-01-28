@@ -19,22 +19,29 @@ Player::Player(){
 	_hitFloor=false;
 	_visible=false;
 
-	this->currentspeed= 0;
+	this->currentspeed = 0;
 }
 
 void Player::Update(float delta){
+
+	float move = 0.0F;
 	if(IsKeyDown(SDLK_RIGHT)){
-		_visible=false;
-		_hitFloor=false;
-		_pos.SetX(_pos.GetX()+1);
-		_pos.SetY(0);
+		//_visible=false;
+		//_hitFloor=false;
+		// 
+		//_pos.SetX(_pos.GetX()+1);
+		//_pos.SetY(0);
+		move = MAX_PIXELS_SPEED_SECS * delta * MOVEMENT_FORWARD;
 	}
 	if(IsKeyDown(SDLK_LEFT)){
-		_visible=false;
-		_hitFloor=false;
-		_pos.SetX(_pos.GetX()-1);
-		_pos.SetY(0);
+		//_visible=false;
+		//_hitFloor=false;
+		//_pos.SetX(_pos.GetX()-1);
+		//_pos.SetY(0);
+		move = MAX_PIXELS_SPEED_SECS * delta * MOVEMENT_BACKWARD;
 	}
+	_pos.SetX(_pos.GetX() + move);
+
 	CorePosition lpoint1=LandPoint(_point1);
 	CorePosition lpoint2=LandPoint(_point2);
 	_lpoint1=lpoint1;
