@@ -16,16 +16,23 @@ void Universe::Init() {
 
 void Universe::Update(float fTime)
 {
-
+	for(SpriteItr i=_sprites.begin(); i!=_sprites.end(); ++i){
+		SpriteBase *ptr = *i;
+		ptr->Update();
+	}
 }
 
 void Universe::Draw()
 {
-	CorePosition * cPos = new CorePosition(100,100);
+	/*CorePosition * cPos = new CorePosition(100,100);
 	CoreSize * cSize = new CoreSize(64,64);
 	this->gEngine->DrawTexture(texture1,cPos,cSize, this->rotation);
 	delete cPos;
-	delete cSize;
+	delete cSize;*/
+	for(SpriteItr i=_sprites.begin(); i!=_sprites.end(); ++i){
+		SpriteBase *ptr = *i;
+		ptr->Draw();
+	}
 }
 
 void Universe::rotateP()

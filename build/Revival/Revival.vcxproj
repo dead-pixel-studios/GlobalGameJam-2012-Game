@@ -72,6 +72,8 @@
     <ClInclude Include="..\..\src\CoreEngine\CorePosition.h" />
     <ClInclude Include="..\..\src\CoreEngine\CoreSize.h" />
     <ClInclude Include="..\..\src\CoreEngine\OpenGLTexture.h" />
+    <ClInclude Include="..\..\src\Revival\SpriteBase.h" />
+    <ClInclude Include="..\..\src\Revival\TestSprite.h" />
     <ClInclude Include="..\..\src\Revival\Universe.h" />
   </ItemGroup>
   <ItemGroup>
@@ -84,6 +86,8 @@
     <ClCompile Include="..\..\src\CoreEngine\OpenGLTexture.cpp" />
     <ClCompile Include="..\..\src\libs\pugixml\pugixml.cpp" />
     <ClCompile Include="..\..\src\main.cpp" />
+    <ClCompile Include="..\..\src\Revival\SpriteBase.cpp" />
+    <ClCompile Include="..\..\src\Revival\TestSprite.cpp" />
     <ClCompile Include="..\..\src\Revival\Universe.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

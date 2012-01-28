@@ -57,6 +57,12 @@
     <ClInclude Include="..\..\src\Revival\Universe.h">
       <Filter>Header Files\Revival</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\Revival\SpriteBase.h">
+      <Filter>Header Files\Revival</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Revival\TestSprite.h">
+      <Filter>Header Files\Revival</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\AppCore\AppCore.cpp">
@@ -87,6 +93,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\Revival\Universe.cpp">
+      <Filter>Source Files\Revival</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Revival\SpriteBase.cpp">
+      <Filter>Source Files\Revival</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Revival\TestSprite.cpp">
       <Filter>Source Files\Revival</Filter>
     </ClCompile>
   </ItemGroup>
