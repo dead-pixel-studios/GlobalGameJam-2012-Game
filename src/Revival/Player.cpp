@@ -16,24 +16,21 @@ Player::Player(){
 	_point2=CorePosition(100,250);
 	_origin=_point1;
 
-	_hitFloor=false;
-	_visible=false;
+	_visible=true;
 
-	this->currentspeed= 0;
+	_currentspeed=0;
 }
 
 void Player::Update(float delta){
 	if(IsKeyDown(SDLK_RIGHT)){
-		_visible=false;
-		_hitFloor=false;
 		_pos.SetX(_pos.GetX()+1);
 		_pos.SetY(0);
+		if(_pos.GetY()>=0) _pos.SetY(0);
 	}
 	if(IsKeyDown(SDLK_LEFT)){
-		_visible=false;
-		_hitFloor=false;
 		_pos.SetX(_pos.GetX()-1);
 		_pos.SetY(0);
+		if(_pos.GetY()>=0) _pos.SetY(0);
 	}
 	CorePosition lpoint1=LandPoint(_point1);
 	CorePosition lpoint2=LandPoint(_point2);
@@ -43,6 +40,8 @@ void Player::Update(float delta){
 	_pos=CorePosition(lpoint1.GetX()-50, lpoint1.GetY()-_size.GetHeight());
 
 	double angle=atan2((double)lpoint2.GetY() - lpoint1.GetY(), (double)lpoint2.GetX() - lpoint1.GetX()) * 180 / 3.14159;
+	if(angle>60.0) angle=60.0;
+	if(angle<-60.0) angle=-60.0;
 	if(angle<=0)angle+=360.0;
 	_angle=angle;
 }
@@ -77,12 +76,13 @@ CorePosition Player::LandPoint(CorePosition point){
 	startPoint.SetX(_pos.GetX()+point.GetX());
 	while(!hit){
 		startPoint.SetY(startPoint.GetY()+1);
-		if(startPoint.GetY()>1024) break; // don't go on forever, give up after 1024 down
+		if(startPoint.GetY()>6000) break; // don't go on forever, give up after 1024 down
 
 		CoreColor pxl=Universe::Instance()->_currentMap->GetPixel(startPoint);
 		Uint32 col=pxl.rgba();
 
 		hit=(col==0x000000ff);
 	}
+	std::cout << startPoint.GetX() << ':' << startPoint.GetY() << std::endl;
 	return startPoint;
 }

@@ -1,5 +1,6 @@
 #include "TestMap.h"
 #include "Universe.h"
+#include <iostream>
 
 TestMap::TestMap()
 {
@@ -92,12 +93,6 @@ void TestMap::Draw()
 		_pwrUp->Draw();
 	}
 }
-	/*
-void TestMap::Draw(){
-	gEngine->DrawRectangle(&_pos,&_size,0xff,0xff,0xff,0xff);
-	DefaultDraw();
-}
-*/
 
 CoreColor TestMap::GetPixel(CorePosition pos){
 	return gEngine->getPixelColor(collision->GetSurface(), pos.GetX(), pos.GetY());
