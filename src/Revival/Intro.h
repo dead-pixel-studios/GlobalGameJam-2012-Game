@@ -18,8 +18,11 @@ private:
 
 	CoreGraphics * gEngine;
 	OpenGLTexture * texture;
+	OpenGLTexture * snake;
 	CorePosition * pos;
 	CoreSize * size;
+	CorePosition * snakepos;
+	CoreSize * snakesize;
 
 	float openedFor;
 	float lastUpdate;
