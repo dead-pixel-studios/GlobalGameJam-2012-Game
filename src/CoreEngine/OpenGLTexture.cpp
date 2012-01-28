@@ -42,6 +42,6 @@ OpenGLTexture::~OpenGLTexture()
 	glDeleteTextures(1, &texture);
 }
 
-int OpenGlTexture::GetPixel(int x, int y){
-
+int OpenGLTexture::GetPixel(int x, int y){
+	return 0;
 }

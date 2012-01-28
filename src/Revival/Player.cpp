@@ -15,9 +15,9 @@ Player::Player(){
 	_visible=true;
 }
 
-void Player::Update(){
+void Player::Update(float){
 	if(!_hitFloor){
-		_pos.SetY(_pos.GetY()+1));
+		_pos.SetY(_pos.GetY()+1);
 		_hitFloor=WorldCollisionCheck();
 	}
 }
@@ -30,4 +30,5 @@ bool Player::WorldCollisionCheck(){
 	int pxl=Universe::Instance()->_currentMap->GetPixel(posToCheck);
 
 	std::cout << pxl << std::endl;
+	return false;
 }
