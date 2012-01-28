@@ -15,6 +15,11 @@ private:
 	float maxpixels_persecond_speed;
 	float currentspeed;
 
+	float jump_time_length_secs;
+	float jump_current_velocity_pixels_sec;
+	float jump_elapsed;
+	bool jumping;
+
 	bool WorldCollisionCheck();
 	CorePosition LandPoint(CorePosition point);
 public:

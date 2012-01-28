@@ -7,7 +7,6 @@ public:
 	static Intro* Instance();
 	void Update(float fTime);
 	void Draw();
-
 	bool finishedIntro();
 protected:
 	Intro(void) {};
@@ -16,7 +15,7 @@ protected:
 private:
 	static Intro* pinstance;
 	void Init();
-
+	float accumulator;
 	CoreGraphics * gEngine;
 	OpenGLTexture * texture;
 	OpenGLTexture * snake;
