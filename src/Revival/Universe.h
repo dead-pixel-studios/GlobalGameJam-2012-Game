@@ -8,12 +8,10 @@ class CoreGraphics;
 
 class Universe {
 public:
+	SDLKey currentKeyStatus;
 	static Universe* Instance();
 	void Update(float fTime);
 	void Draw();
-
-	void rotateP();
-	void rotateM();
 
 	void AddSprite(SpriteBase *sprite);
 
@@ -28,9 +26,6 @@ private:
 	static Universe* pinstance;
 	void Init();
 	float rotation;
-
-	CoreGraphics * gEngine;
-	OpenGLTexture * texture1;
 
 	SpriteSet _sprites;
 };

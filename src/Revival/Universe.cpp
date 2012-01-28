@@ -1,4 +1,5 @@
 #include "Universe.h"
+#include "TestSprite.h"
 
 Universe* Universe::pinstance = 0;
 Universe* Universe::Instance () {
@@ -7,11 +8,11 @@ Universe* Universe::Instance () {
 }
 
 void Universe::Init() {
-	this->gEngine = CoreGraphics::Instance();
-	this->rotation = 0.0F;
+	AddSprite(new TestSprite());
+}
 
-	texture1 = gEngine->CreateTexture(CoreFunctions::GetAppPath() + "/data/bloogy.bmp");
-	texture1->Load();
+void Universe::AddSprite(SpriteBase *sprite){
+	_sprites.insert(sprite);
 }
 
 void Universe::Update(float fTime)
@@ -24,22 +25,8 @@ void Universe::Update(float fTime)
 
 void Universe::Draw()
 {
-	/*CorePosition * cPos = new CorePosition(100,100);
-	CoreSize * cSize = new CoreSize(64,64);
-	this->gEngine->DrawTexture(texture1,cPos,cSize, this->rotation);
-	delete cPos;
-	delete cSize;*/
 	for(SpriteItr i=_sprites.begin(); i!=_sprites.end(); ++i){
 		SpriteBase *ptr = *i;
 		ptr->Draw();
 	}
-}
-
-void Universe::rotateP()
-{
-	this->rotation += 1.0F;
-}
-void Universe::rotateM()
-{
-	this->rotation -= 1.0F;
 }
