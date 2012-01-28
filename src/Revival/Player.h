@@ -12,6 +12,9 @@ private:
 	static const int MOVEMENT_FORWARD = 1;
 	static const int MOVEMENT_BACKWARD = -1;
 
+	float Gravity;
+	float Velocity;
+
 	float maxpixels_persecond_speed;
 	float currentspeed;
 

@@ -26,6 +26,9 @@ Player::Player(){
 
 	_visible=true;
 
+	Gravity = 2.5;
+	Velocity= 0;
+
 	this->currentspeed = 0;
 }
 
@@ -38,38 +41,54 @@ void Player::Update(float delta){
 	if(IsKeyDown(SDLK_LEFT)){
 		move = maxpixels_persecond_speed * delta * MOVEMENT_BACKWARD;
 	}
-	if((jump_elapsed >= jump_time_length_secs) || (Intro::Instance()->finishedIntro() == true && IsKeyDown(SDLK_LCTRL))) {
-		jumping = true;
+	//if((jump_elapsed >= jump_time_length_secs) || (Intro::Instance()->finishedIntro() == true && IsKeyDown(SDLK_LCTRL))) {
+	//	jumping = true;
+	//}
+	if(IsKeyDown(SDLK_LCTRL)) {
+		Velocity = -24.0F;
 	}
 
 	// move Y (up down)
-	CorePosition lpoint1=LandPoint(_point1);
-	CorePosition lpoint2=LandPoint(_point2);
+	CorePosition lpoint1 = LandPoint(_point1);
+	CorePosition lpoint2 = LandPoint(_point2);
 
 	int jump_move_y_by = 0;
 
-	// jumping
-	if(jumping) {
-		  if (jump_elapsed < (jump_time_length_secs)) {
-			// starting to jump
-			// first third of jump animation
-			jump_move_y_by = delta / 1;
-			lpoint1.SetY(lpoint1.GetY() - jump_move_y_by);
-			lpoint2.SetY(lpoint2.GetY() - jump_move_y_by);
-		}
-		jump_elapsed += delta;
-	}
+	//// jumping
+	//if(jumping) {
+	//	  if (jump_elapsed < (jump_time_length_secs)) {
+	//		// starting to jump
+	//		// first third of jump animation
+	//		jump_move_y_by = delta * 1;
+	//		lpoint1.SetY(lpoint1.GetY() - jump_move_y_by);
+	//		lpoint2.SetY(lpoint2.GetY() - jump_move_y_by);
+	//	}
+	//	jump_elapsed += delta / 1000;
+	//}
+
+	//if(jumping) {
+	//	Velocity = -14.0F;
+	//}
+
+
+	Velocity += Gravity;
 
 	if(jump_elapsed >= jump_time_length_secs) {
 		jumping = false;
 		jump_elapsed = 0.0F;
 	}
 
-	_lpoint1=lpoint1;
-	_lpoint2=lpoint2;
-	CorePosition * position_includinglowestpoints = new CorePosition(lpoint1.GetX()-50, lpoint1.GetY()-_size.GetHeight());
-	_pos.SetX(position_includinglowestpoints->GetX());
-	_pos.SetY(position_includinglowestpoints->GetY());
+	//_lpoint1=lpoint1; // left collision detect point 
+	//_lpoint2=lpoint2; // right collision detect point
+
+	_pos.SetX(lpoint1.GetX()-50);
+	_pos.SetY(_pos.GetY() + Velocity);
+
+	if(_pos.GetY() > lpoint1.GetY()-_size.GetHeight()) {
+		Velocity = 0;
+		_pos.SetY(lpoint1.GetY()-_size.GetHeight());
+	}
+	//_pos.SetY(lpoint1.GetY()-_size.GetHeight());
 
 	// move X (left right)
 	float wantedx = _pos.GetX() + move;
