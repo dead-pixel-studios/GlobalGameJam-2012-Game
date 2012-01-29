@@ -20,11 +20,21 @@ Player::Player()
 	this->movingbackwards_sprites_texture->Load();
 	this->staticiso_sprite_texture = gEngine->CreateTexture(CoreFunctions::GetAppPath() + "/data/Static/StaticIsoRight.png");
 	this->staticiso_sprite_texture->Load();
-
 	this->jumpleft_texture = gEngine->CreateTexture(CoreFunctions::GetAppPath() + "/data/Jump/JumpLeft.png");
 	this->jumpleft_texture->Load();
 	this->jumpright_texture = gEngine->CreateTexture(CoreFunctions::GetAppPath() + "/data/Jump/JumpRight.png");
 	this->jumpright_texture->Load();
+
+	this->ghost_movingforward_sprites_texture = gEngine->CreateTexture(CoreFunctions::GetAppPath() + "/data/Ghost/Walking/WalkRight.png");
+	this->ghost_movingforward_sprites_texture->Load();
+	this->ghost_movingbackwards_sprites_texture = gEngine->CreateTexture(CoreFunctions::GetAppPath() + "/data/Ghost/Walking/WalkLeft.png");
+	this->ghost_movingbackwards_sprites_texture->Load();
+	this->ghost_staticiso_sprite_texture = gEngine->CreateTexture(CoreFunctions::GetAppPath() + "/data/Ghost/Static/StaticIsoRight.png");
+	this->ghost_staticiso_sprite_texture->Load();
+	this->ghost_jumpleft_texture = gEngine->CreateTexture(CoreFunctions::GetAppPath() + "/data/Ghost/Jump/JumpLeft.png");
+	this->ghost_jumpleft_texture->Load();
+	this->ghost_jumpright_texture = gEngine->CreateTexture(CoreFunctions::GetAppPath() + "/data/Ghost/Jump/JumpRight.png");
+	this->ghost_jumpright_texture->Load();
 
 	this->texture = staticiso_sprite_texture;
 	
@@ -44,6 +54,7 @@ Player::Player()
 	this->Velocity= 0;
 	_health=100;
 	_doomed=false;
+	dead = false;
 
 	_visible=true;
 
@@ -185,6 +196,7 @@ void Player::Update(float delta){
 		_pos=CorePosition(0,0);
 		_health=100;
 		_doomed=false;
+		dead = true;
 		std::cout << "DIED!" << std::endl;
 
 		DeadPlayer *dp=new DeadPlayer(_recorded_events);
@@ -194,9 +206,6 @@ void Player::Update(float delta){
 }
 
 void Player::Draw(){
-
-
-
 	CorePosition cpoint1=_lpoint1-Universe::Instance()->_worldOffset;
 	CorePosition cpoint2=_lpoint1-Universe::Instance()->_worldOffset;
 
@@ -212,18 +221,30 @@ void Player::Draw(){
 		// moving right
 		if(jumping) {
 			this->texture = jumpright_texture;
+			if(dead) {
+				this->texture = ghost_jumpright_texture;
+			}
 		}
 		else {
 			this->texture = movingforward_sprites_texture;
+			if(dead) {
+				this->texture = ghost_movingforward_sprites_texture;
+			}
 		}
 		frames = 8;
 	} else if (currentDirection < 0) {
 		// moving left
 		if(jumping) {
 			this->texture = jumpleft_texture;
+			if(dead) {
+				this->texture = ghost_jumpleft_texture;
+			}
 		}
 		else {
 			this->texture = movingbackwards_sprites_texture;
+			if(dead) {
+				this->texture = ghost_movingbackwards_sprites_texture;
+			}
 		}
 		frames = 8;
 	} else {
@@ -231,11 +252,17 @@ void Player::Draw(){
 		if(jumping) {
 			this->texture = jumpright_texture;
 			frames = 8;
+			if(dead) {
+				this->texture = ghost_jumpright_texture;
+			}
 		}
 		else {
 			this->texture = staticiso_sprite_texture;
 			frames =1;
 			currentframe = 0;
+			if(dead) {
+				this->texture = ghost_staticiso_sprite_texture;
+			}
 		}
 	}
 

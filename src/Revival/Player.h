@@ -41,9 +41,14 @@ protected:
 	OpenGLTexture *movingforward_sprites_texture;
 	OpenGLTexture *movingbackwards_sprites_texture;
 	OpenGLTexture *staticiso_sprite_texture;
-
 	OpenGLTexture *jumpleft_texture;
 	OpenGLTexture *jumpright_texture;
+
+	OpenGLTexture *ghost_movingforward_sprites_texture;
+	OpenGLTexture *ghost_movingbackwards_sprites_texture;
+	OpenGLTexture *ghost_staticiso_sprite_texture;
+	OpenGLTexture *ghost_jumpleft_texture;
+	OpenGLTexture *ghost_jumpright_texture;
 
 	CorePosition _point1, _point2;
 	CorePosition _lpoint1, _lpoint2;
@@ -65,6 +70,7 @@ protected:
 	float jump_elapsed;
 	bool jumping;
 	bool _doomed;
+	bool dead;
 
 	int _health;
 	double _time_elapsed;
