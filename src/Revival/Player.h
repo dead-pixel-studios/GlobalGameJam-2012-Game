@@ -13,7 +13,8 @@ namespace EventType{
 		Left,
 		Right,
 		Jump,
-		Die
+		Die,
+		Hurt
 	};
 }
 
