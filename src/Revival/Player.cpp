@@ -203,12 +203,15 @@ void Player::Update(float delta)
 		_pos=CorePosition(0,0);
 		_health=100;
 		_doomed=false;
+
+		if(!dead){
+			DeadPlayer *dp=new DeadPlayer(_recorded_events);
+			Universe::Instance()->AddSprite(dp);
+			dp->Start();
+		}
+
 		dead = true;
 		std::cout << "DIED!" << std::endl;
-
-		/*DeadPlayer *dp=new DeadPlayer(_recorded_events);
-		Universe::Instance()->AddSprite(dp);
-		dp->Start();*/
 	}
 }
 
