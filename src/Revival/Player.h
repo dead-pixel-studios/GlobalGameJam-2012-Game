@@ -5,6 +5,12 @@
 class Player : public SpriteBase{
 private:
 	bool _hitFloor;
+	
+	int currentDirection;
+
+	OpenGLTexture *movingforward_sprites_texture;
+	OpenGLTexture *movingbackwards_sprites_texture;
+	OpenGLTexture *staticiso_sprite_texture;
 
 	CorePosition _point1, _point2;
 	CorePosition _lpoint1, _lpoint2;
@@ -16,11 +22,10 @@ private:
 	float Velocity;
 
 	float maxpixels_persecond_speed;
-	float currentspeed;
+	CorePosition lastupdatepos;
 
-	float currentframe;
-	CoreSize framesize;
-	int lastframems;
+	int currentframe;
+	float frame_accumulator;
 
 	float jump_time_length_secs;
 	float jump_current_velocity_pixels_sec;

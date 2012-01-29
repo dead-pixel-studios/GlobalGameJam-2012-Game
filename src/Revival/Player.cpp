@@ -9,11 +9,16 @@ CoreSize sz33(3,3);
 
 Player::Player(){
 
-	this->tits = 0;
 	this->maxpixels_persecond_speed = 0.8F;
 
-	this->texture = gEngine->CreateTexture(CoreFunctions::GetAppPath() + "/data/Walking/FinalWalkRight.png");
-	this->texture->Load();
+	this->movingforward_sprites_texture = gEngine->CreateTexture(CoreFunctions::GetAppPath() + "/data/Walking/FinalWalkRight.png");
+	this->movingforward_sprites_texture->Load();
+	this->movingbackwards_sprites_texture = gEngine->CreateTexture(CoreFunctions::GetAppPath() + "/data/Walking/FinalWalkLeft.png");
+	this->movingbackwards_sprites_texture->Load();
+	this->staticiso_sprite_texture = gEngine->CreateTexture(CoreFunctions::GetAppPath() + "/data/Static/StaticRightIso.png");
+	this->staticiso_sprite_texture->Load();
+
+	this->texture = staticiso_sprite_texture;
 	
 	this->_size=CoreSize(145,250);
 	this->_pos=CorePosition(0,0);
@@ -22,7 +27,7 @@ Player::Player(){
 	this->_point2=CorePosition(100,250);
 	this->_origin=_point1;
 
-	this->jump_time_length_secs = 5.0F; // how long it takes to jump
+	this->jump_time_length_secs = 7.0F; // how long it takes to jump
 	this->jump_current_velocity_pixels_sec = 1.0F; // current jump velocity (pixels per second) (for acceleration)
 	this->jump_elapsed = 0.0F; // current jump
 	this->jumping = false;
@@ -33,95 +38,92 @@ Player::Player(){
 
 	_visible=true;
 
-	this->currentspeed = 0;
 	this->currentframe = 0;
-	this->framesize = CoreSize(_size.GetWidth(), _size.GetHeight());
+	//this->framesize = CoreSize(_size.GetWidth(), _size.GetHeight());
+
+	frame_accumulator = 0;
+	lastupdatepos = _pos;
 }
 
 void Player::Update(float delta){
 
 
 	float move = 0.0F;
-	if(IsKeyDown(SDLK_RIGHT)){
+	if(IsKeyDown(SDLK_RIGHT) || IsKeyDown(SDLK_a)){
 		move = maxpixels_persecond_speed * delta * MOVEMENT_FORWARD;
-	}
-	if(IsKeyDown(SDLK_LEFT)){
+		currentDirection = MOVEMENT_FORWARD;
+	} else if (IsKeyDown(SDLK_LEFT) || IsKeyDown(SDLK_d)){
 		move = maxpixels_persecond_speed * delta * MOVEMENT_BACKWARD;
+		currentDirection =MOVEMENT_BACKWARD;
+	} else {
+		currentDirection = 0; // stationary
 	}
-	//if((jump_elapsed >= jump_time_length_secs) || (Intro::Instance()->finishedIntro() == true && IsKeyDown(SDLK_LCTRL))) {
-	//	jumping = true;
-	//}
-	if(IsKeyDown(SDLK_LCTRL)) {
-		Velocity = -24.0F;
+
+	if(IsKeyDown(SDLK_LCTRL) || IsKeyDown(SDLK_w) || IsKeyDown(SDLK_UP)) {
+		if (jumping != true) {
+			Velocity = -30.0F;
+			jumping = true;
+		}
 	}
 
 	// move Y (up down)
 	CorePosition lpoint1 = LandPoint(_point1);
 	CorePosition lpoint2 = LandPoint(_point2);
 
-	int jump_move_y_by = 0;
-
-	// jumping
-	if(jumping) {
-	//	  if (jump_elapsed < (jump_time_length_secs)) {
-	//		// starting to jump
-	//		// first third of jump animation
-	//		jump_move_y_by = delta * 1;
-	//		lpoint1.SetY(lpoint1.GetY() - jump_move_y_by);
-	//		lpoint2.SetY(lpoint2.GetY() - jump_move_y_by);
-	//	}
-		jump_elapsed += delta / 1000;
-	}
-
-	//if(jumping) {
-	//	Velocity = -14.0F;
-	//}
-
-
-	Velocity += Gravity;
-
+	jump_elapsed += delta / 100;
 	if(jump_elapsed >= jump_time_length_secs) {
 		jumping = false;
 		jump_elapsed = 0.0F;
 	}
 
-	//_lpoint1=lpoint1; // left collision detect point 
-	//_lpoint2=lpoint2; // right collision detect point
+	Velocity += Gravity;
 
 	_pos.SetX(lpoint1.GetX()-50);
-	_pos.SetY(_pos.GetY() + Velocity);
+	_pos.SetY((int) (_pos.GetY() + Velocity));
 
 	if(_pos.GetY() > lpoint1.GetY()-_size.GetHeight()) {
 		Velocity = 0;
 		_pos.SetY(lpoint1.GetY()-_size.GetHeight());
 	}
-	//_pos.SetY(lpoint1.GetY()-_size.GetHeight());
 
 	// move X (left right)
 	float wantedx = _pos.GetX() + move;
 	float min_x = 0.0F;
-	float max_x = Universe::Instance()->_currentMap->GetSize().GetWidth() - this->_size.GetWidth();
+	float max_x = (float) Universe::Instance()->_currentMap->GetSize().GetWidth() - this->_size.GetWidth();
 	if(wantedx >= min_x && wantedx <= max_x) {
-		_pos.SetX(wantedx);
+		_pos.SetX((float) wantedx);
 	}
 	// rotation using ray-tracing
 	double angle=atan2((double)lpoint2.GetY() - lpoint1.GetY(), (double)lpoint2.GetX() - lpoint1.GetX()) * 180 / 3.14159;
 	if(angle>60.0) angle=60.0;
 	if(angle<-60.0) angle=-60.0;
 	if(angle<=0) angle+=360.0;
-	_angle=angle;
-	
-	_visible=true;
+	_angle=(float) angle;
+
+
+	frame_accumulator += delta ;
+	while (frame_accumulator >= (800.00/8)) {
+		frame_accumulator -= (800.0F/8);
+		if(this->_pos.GetX() != this->lastupdatepos.GetX() || this->_pos.GetY() != this->lastupdatepos.GetY()) {
+			currentframe++;
+			currentframe = currentframe % 8;
+		} else {
+			currentframe = 0;
+		}
+	}
+
 
 	if(Universe::Instance()->_currentMap->IsKillZone(_pos+_point1)) _health-=10;
 	
 	if(_health<=0){
 		//fade out
-		_visible=false;
+		//_visible=false;
 		_pos=CorePosition(0,0);
 		_health=100;
 		std::cout << "DIED!" << std::endl;
 	}
+
+	
 }
 
 void Player::Draw(){
@@ -132,24 +134,43 @@ void Player::Draw(){
 	CorePosition cpoint2=_lpoint1-Universe::Instance()->_worldOffset;
 
 	SDL_Rect * bacon = new SDL_Rect();
-	bacon->h = 0.1;
-	bacon->w = 0.1;
-	bacon->x = 0.1;
-	bacon->y = 0.1;
+	bacon->h = (Uint16) 0.1;
+	bacon->w = (Uint16) 0.1;
+	bacon->x = (Uint16) 0.1;
+	bacon->y = (Uint16) 0.1;
 
 	//SDL_SetClipRect(this->texture->GetSurface(), bacon);
+	int frames;
+	if (currentDirection > 0) { 
+		// moving right
+		this->texture = movingforward_sprites_texture; 
+		frames = 8;
+	} else if (currentDirection < 0) {
+		// moving left
+		this->texture = movingbackwards_sprites_texture;
+		frames = 8;
+	} else {
+		// stationary
+		this->texture = staticiso_sprite_texture;
+		currentframe = 0;
+		frames =1;
+	}
 
 	// Draw the sprite
 	if(_visible){
 		CorePosition drawPosition=_pos;
 		drawPosition.SetX(drawPosition.GetX()-Universe::Instance()->_worldOffset.GetX());
 		drawPosition.SetY(drawPosition.GetY()-Universe::Instance()->_worldOffset.GetY());
-		this->gEngine->DrawTextureFrame(texture,&drawPosition,&_origin,&_size,_angle,8,tits++%8);
+		this->gEngine->DrawTextureFrame(texture,&drawPosition,&_origin,&_size,_angle,frames,currentframe);
 	}
 
 	// Draw the two ray-tracing dots (over the sprite)
 	gEngine->DrawRectangle(&cpoint1, &sz33 ,0xff,0,0,0xff);
 	gEngine->DrawRectangle(&cpoint2, &sz33 ,0xff,0,0,0xff);
+
+	lastupdatepos.SetX(_pos.GetX());
+	lastupdatepos.SetY(_pos.GetY());
+
 }
 
 bool Player::WorldCollisionCheck(){
