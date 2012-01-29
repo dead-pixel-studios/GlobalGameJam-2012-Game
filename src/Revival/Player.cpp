@@ -201,9 +201,9 @@ void Player::Update(float delta){
 		dead = true;
 		std::cout << "DIED!" << std::endl;
 
-		DeadPlayer *dp=new DeadPlayer(_recorded_events);
+		/*DeadPlayer *dp=new DeadPlayer(_recorded_events);
 		Universe::Instance()->AddSprite(dp);
-		dp->Start();
+		dp->Start();*/
 	}
 }
 
@@ -317,21 +317,20 @@ CorePosition Player::LandPoint(CorePosition point){
 	// using the map, find the hit layer and return the top pixel in y-axis as a coreposition
 	// check any visible platforms first and return them if valid
 
-	bool hit=false;
+	bool found=false;
 
 	CorePosition startPoint=point;
 	startPoint.SetY(0);
 	startPoint.SetX(_pos.GetX()+point.GetX());
-	while(!hit){
-		startPoint.SetY(startPoint.GetY()+1);
-		if(startPoint.GetY()>6000) break; // don't go on forever, give up after 6000 down
+	int mapHeight=Universe::Instance()->_currentMap->GetSize().GetHeight();
+	int checkPoint=mapHeight/2, loop=0;
+	while(!found){
+		bool hit=false;
+		if(startPoint.GetY()>mapHeight) break; // don't go on forever
+		startPoint.SetY(checkPoint);
 
 		int count = (int) Universe::Instance()->_currentMap->platforms.size();
 		for(int i = 0; i < count; i++) {
-
-			//if (startPoint.GetY() > 300 && startPoint.GetX() < 200) {
-			//	hit = true;
-			//}
 
 			Platform * element = Universe::Instance()->_currentMap->platforms.at(i);
 			if(element->collision_enabled) {
@@ -346,7 +345,16 @@ CorePosition Player::LandPoint(CorePosition point){
 		if (!hit) {
 			hit=(col==0x000000ff);
 		}
+
+		if(hit && Universe::Instance()->_currentMap->GetPixel(CorePosition(startPoint.GetX(), startPoint.GetY()-1)).rgba()!=-0x000000ff){
+			break;
+		}
+
+		if(hit)checkPoint-=mapHeight/(1 << loop);
+		else checkPoint+=mapHeight/(1 << loop);
+		++loop;
 	}
+	std::cout << startPoint.GetX() << ',' << startPoint.GetY() << std::endl;
 	return startPoint;
 }
 

@@ -112,13 +112,13 @@ void DeadPlayer::Update(float delta){
 	}
 	
 	if(currentEvent.type==EventType::Die){
-		_pos=currentEvent.pos;
+		/*_pos=currentEvent.pos;
 		//fade out
 		//_visible=false;
 		_pos=CorePosition(0,0);
 		_health=100;
 		_doomed=false;
-		Start();
+		Start();*/
 
 		std::cout << "DeadPlayer DIED!" << std::endl;
 	}
