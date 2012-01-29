@@ -35,6 +35,9 @@ protected:
 	OpenGLTexture *movingbackwards_sprites_texture;
 	OpenGLTexture *staticiso_sprite_texture;
 
+	OpenGLTexture *jumpleft_texture;
+	OpenGLTexture *jumpright_texture;
+
 	CorePosition _point1, _point2;
 	CorePosition _lpoint1, _lpoint2;
 

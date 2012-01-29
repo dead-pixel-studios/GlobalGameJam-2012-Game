@@ -2,7 +2,9 @@
 
 #include <iostream>
 
-DeadPlayer::DeadPlayer(EventList events){
+DeadPlayer::DeadPlayer(EventList events)
+{
+
 	_master_events=events;
 	_started=false;
 	_visible=false;
