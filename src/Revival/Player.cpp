@@ -402,6 +402,27 @@ bool Player::WorldCollisionCheck(){
 	return (col==0x000000ff);
 }
 
+bool IsHit(CorePosition startPoint){
+	bool hit=false;
+	int count = (int) Universe::Instance()->_currentMap->platforms.size();
+	for(int i = 0; i < count; i++) {
+
+		Platform * element = Universe::Instance()->_currentMap->platforms.at(i);
+		if(element->collision_enabled) {
+			CoreColor temp = element->GetPixel(startPoint);
+			Uint32 tempcol = temp.rgba();
+			hit=(tempcol==0x000000ff);
+		}
+	}
+
+	CoreColor pxl=Universe::Instance()->_currentMap->GetPixel(startPoint);
+	Uint32 col=pxl.rgba();
+	if (!hit) {
+		hit=(col==0x000000ff);
+	}
+	return hit;
+}
+
 CorePosition Player::LandPoint(CorePosition point){
 
 	// ray trace down from point
@@ -414,38 +435,15 @@ CorePosition Player::LandPoint(CorePosition point){
 	startPoint.SetY(0);
 	startPoint.SetX(_pos.GetX()+point.GetX());
 	int mapHeight=Universe::Instance()->_currentMap->GetSize().GetHeight();
-	int checkPoint=mapHeight/2, loop=1;
-	while(!found){
-		++loop;
-		bool hit=false;
-		if(startPoint.GetY()>mapHeight)	throw 0; // don't go on forever
-		startPoint.SetY(checkPoint);
-
-		int count = (int) Universe::Instance()->_currentMap->platforms.size();
-		for(int i = 0; i < count; i++) {
-
-			Platform * element = Universe::Instance()->_currentMap->platforms.at(i);
-			if(element->collision_enabled) {
-				CoreColor temp = element->GetPixel(startPoint);
-				Uint32 tempcol = temp.rgba();
-				hit=(tempcol==0x000000ff);
+	for(int cy=0; cy<mapHeight; cy+=10){
+		startPoint.SetY(cy);
+		bool hit=IsHit(startPoint);
+		if(hit){
+			while(IsHit(CorePosition(startPoint.GetX(), startPoint.GetY()-1))){
+				startPoint.SetY(startPoint.GetY()-1);
 			}
-		}
-
-		CoreColor pxl=Universe::Instance()->_currentMap->GetPixel(startPoint);
-		Uint32 col=pxl.rgba();
-		if (!hit) {
-			hit=(col==0x000000ff);
-		}
-
-		if(hit && Universe::Instance()->_currentMap->GetPixel(CorePosition(startPoint.GetX(), startPoint.GetY()-1)).rgba()!=-0x000000ff){
 			break;
 		}
-
-		int chgval=mapHeight/(1 << loop);
-
-		if(hit)checkPoint-=chgval;
-		else checkPoint+=chgval;
 	}
 	return startPoint;
 }
