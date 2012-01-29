@@ -14,6 +14,7 @@ void DeadPlayer::Start(){
 	_started=true;
 	_visible=true;
 	_solid=true;
+	_time_elapsed=0.0;
 }
 
 void DeadPlayer::Update(float delta){
