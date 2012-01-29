@@ -14,11 +14,11 @@ Player::Player()
 
 	this->maxpixels_persecond_speed = 0.8F;
 
-	this->movingforward_sprites_texture = gEngine->CreateTexture(CoreFunctions::GetAppPath() + "/data/Walking/FinalWalkRight.png");
+	this->movingforward_sprites_texture = gEngine->CreateTexture(CoreFunctions::GetAppPath() + "/data/Walking/WalkRight.png");
 	this->movingforward_sprites_texture->Load();
-	this->movingbackwards_sprites_texture = gEngine->CreateTexture(CoreFunctions::GetAppPath() + "/data/Walking/FinalWalkLeft.png");
+	this->movingbackwards_sprites_texture = gEngine->CreateTexture(CoreFunctions::GetAppPath() + "/data/Walking/WalkLeft.png");
 	this->movingbackwards_sprites_texture->Load();
-	this->staticiso_sprite_texture = gEngine->CreateTexture(CoreFunctions::GetAppPath() + "/data/Static/StaticRightIso.png");
+	this->staticiso_sprite_texture = gEngine->CreateTexture(CoreFunctions::GetAppPath() + "/data/Static/StaticIsoRight.png");
 	this->staticiso_sprite_texture->Load();
 
 	this->texture = staticiso_sprite_texture;
