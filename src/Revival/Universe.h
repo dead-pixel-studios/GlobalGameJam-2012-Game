@@ -16,7 +16,7 @@ public:
 
 	void AddSprite(SpriteBase *sprite);
 	void RemoveAndDeleteSprite(SpriteBase *sprite);
-	void RemoveAllSprites(bool preserverPlayer=false);
+	void RemoveAllSprites(bool preserveFocus=false);
 	SpriteSet CollisionDetect(CorePosition pos, CoreSize box, SpriteBase *ignore=NULL);
 
 	void KeyDown(SDLKey key);
