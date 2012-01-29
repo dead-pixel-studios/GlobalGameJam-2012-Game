@@ -9,7 +9,8 @@
 
 CoreSize sz33(3,3);
 
-Player::Player(){
+Player::Player()
+{
 
 	this->maxpixels_persecond_speed = 0.8F;
 
@@ -22,7 +23,7 @@ Player::Player(){
 
 	this->texture = staticiso_sprite_texture;
 	
-	this->_size=CoreSize(145,250);
+	this->_size=CoreSize(145,500);
 	this->_pos=CorePosition(0,0);
 
 	this->_point1=CorePosition(50, 250);
