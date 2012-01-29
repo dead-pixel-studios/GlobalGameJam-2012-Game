@@ -125,3 +125,9 @@ SpriteSet Universe::CollisionDetect(CorePosition pos, CoreSize size, SpriteBase 
 void Universe::RemoveAndDeleteSprite(SpriteBase *sprite){
 	_deletes.insert(sprite);
 }
+
+void Universe::RemoveAllSprites(bool preserveFocus){
+	for(SpriteItr i=_sprites.begin(); i!=_sprites.end(); ++i){
+		if(!preserveFocus || *i!=_focus) RemoveAndDeleteSprite(*i);
+	}
+}
