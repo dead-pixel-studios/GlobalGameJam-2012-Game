@@ -53,6 +53,8 @@ Player::Player()
 	frame_accumulator = 0;
 	lastupdatepos = _pos;
 	_time_elapsed=0;
+
+	this->player1 = new CoreController(1);
 }
 
 void Player::Update(float delta){
@@ -70,12 +72,54 @@ void Player::Update(float delta){
 	} else {
 		currentDirection = 0; // stationary
 	}
-
 	if(IsKeyDown(SDLK_LCTRL) || IsKeyDown(SDLK_w) || IsKeyDown(SDLK_UP)) {
 		RecordEvent(EventType::Jump);
 		if (jumping != true) {
 			Velocity = -30.0F;
 			jumping = true;
+		}
+	}
+
+	if(player1->IsConnected()) {
+		/*if(player1->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_RIGHT) {
+			move = maxpixels_persecond_speed * delta * MOVEMENT_FORWARD;
+			currentDirection = MOVEMENT_FORWARD;
+			RecordEvent(EventType::Left);
+		}
+		else if(player1->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_LEFT) {
+			move = maxpixels_persecond_speed * delta * MOVEMENT_BACKWARD;
+			currentDirection =MOVEMENT_BACKWARD;
+			RecordEvent(EventType::Right);
+		}
+		else if(player1->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_UP) {
+			RecordEvent(EventType::Jump);
+			if (jumping != true) {
+				Velocity = -30.0F;
+				jumping = true;
+			}
+		}
+		*/
+
+		thumblx = player1->GetState().Gamepad.sThumbLX;
+		thumbly = player1->GetState().Gamepad.sThumbLY;
+
+		if(thumblx>4000) {
+			move = maxpixels_persecond_speed * delta * MOVEMENT_FORWARD;
+			currentDirection = MOVEMENT_FORWARD;
+			RecordEvent(EventType::Left);
+		}
+		else if(thumblx<-10000) {
+			move = maxpixels_persecond_speed * delta * MOVEMENT_BACKWARD;
+			currentDirection =MOVEMENT_BACKWARD;
+			RecordEvent(EventType::Right);
+		}
+
+		if(player1->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_A) {
+			RecordEvent(EventType::Jump);
+			if (jumping != true) {
+				Velocity = -30.0F;
+				jumping = true;
+			}
 		}
 	}
 
@@ -214,6 +258,15 @@ void Player::Draw(){
 	lastupdatepos.SetX(_pos.GetX());
 	lastupdatepos.SetY(_pos.GetY());
 
+	CorePosition * textPos = new CorePosition(10,50);
+	SDL_Color color;
+	color.r = 255;
+	color.g = 0;
+	color.b = 0;
+	gEngine->DrawString(CoreFunctions::addIntToString("X: ",thumblx),textPos,color);
+	textPos->SetY(60);
+	gEngine->DrawString(CoreFunctions::addIntToString("Y: ",thumbly),textPos,color);
+	free(textPos);
 }
 
 bool Player::WorldCollisionCheck(){

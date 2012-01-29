@@ -96,6 +96,7 @@ void TestMap::Draw()
 		color.g = 0;
 		color.b = 0;
 		this->gEngine->DrawString(CoreFunctions::addIntToString("PosY: ", _pos.GetY()),textPos,color);
+		free(textPos);
 
 		//_pwrUp->Draw();
 	}
