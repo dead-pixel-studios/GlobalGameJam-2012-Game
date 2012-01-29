@@ -72,11 +72,13 @@ void Player::Update(float delta){
 	_time_elapsed+=delta;
 
 	float move = 0.0F;
-	if(IsKeyDown(SDLK_RIGHT) || IsKeyDown(SDLK_d)){
+	if((IsKeyDown(SDLK_RIGHT) || IsKeyDown(SDLK_d)) && (IsKeyDown(SDLK_LEFT) || IsKeyDown(SDLK_a))){
+		currentDirection=0;
+	}else if(IsKeyDown(SDLK_RIGHT) || IsKeyDown(SDLK_d)){
 		move = maxpixels_persecond_speed * delta * MOVEMENT_FORWARD;
 		currentDirection = MOVEMENT_FORWARD;
 		RecordEvent(EventType::Left);
-	} else if (IsKeyDown(SDLK_LEFT) || IsKeyDown(SDLK_a)){
+	}else if (IsKeyDown(SDLK_LEFT) || IsKeyDown(SDLK_a)){
 		move = maxpixels_persecond_speed * delta * MOVEMENT_BACKWARD;
 		currentDirection =MOVEMENT_BACKWARD;
 		RecordEvent(EventType::Right);
