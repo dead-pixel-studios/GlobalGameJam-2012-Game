@@ -11,4 +11,5 @@ public:
 	DeadPlayer(EventList events);
 	void Start();
 	void Update(float);
+	void Draw();
 };
