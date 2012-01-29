@@ -24,7 +24,7 @@ void AppCore::Update(float fTime)
 	if(appStartFrame==-1) { appStartFrame = SDL_GetTicks(); }
 	float frameRate = (float)((float)frameCount / (float)((SDL_GetTicks() - appStartFrame) / 1000.f));
 
-	//SDL_framerateDelay(this->GraphicsCore->getFPSManager());
+	SDL_framerateDelay(this->GraphicsCore->getFPSManager());
 	
 	if(this->intro->finishedIntro()) {
 		this->universe->Update(fTime);

@@ -16,13 +16,19 @@ private:
 	static Intro* pinstance;
 	void Init();
 	float accumulator;
+	float loadaccu;
 	CoreGraphics * gEngine;
 	OpenGLTexture * texture;
 	OpenGLTexture * snake;
+	OpenGLTexture * loadico;
 	CorePosition * pos;
 	CoreSize * size;
 	CorePosition * snakepos;
 	CoreSize * snakesize;
+
+	CorePosition * loadpos;
+	CoreSize * loadsize;
+
 	CoreController * player1;
 
 	float openedFor;
@@ -30,5 +36,7 @@ private:
 	float rotation;
 	bool haveFinishedIntro;
 	bool fadeIn;
+	bool loading;
+
 float fade;
 };
