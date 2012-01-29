@@ -44,6 +44,9 @@ protected:
 	OpenGLTexture *jumpleft_texture;
 	OpenGLTexture *jumpright_texture;
 
+	OpenGLTexture *lavadeath_left;
+	OpenGLTexture *lavadeath_right;
+
 	OpenGLTexture *ghost_movingforward_sprites_texture;
 	OpenGLTexture *ghost_movingbackwards_sprites_texture;
 	OpenGLTexture *ghost_staticiso_sprite_texture;

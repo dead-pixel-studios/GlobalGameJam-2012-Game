@@ -28,6 +28,16 @@ private:
 	OpenGLTexture * lava1;
 	OpenGLTexture * lava2;
 	OpenGLTexture * lava3;
+	OpenGLTexture * lava4;
+	OpenGLTexture * lava5;
+	OpenGLTexture * lava6;
+	OpenGLTexture * lava7;
+	OpenGLTexture * lava8;
+	OpenGLTexture * lava9;
+	OpenGLTexture * lava10;
+	OpenGLTexture * lava11;
+	OpenGLTexture * lava12;
+
 
 	OpenGLTexture * killzone;
 

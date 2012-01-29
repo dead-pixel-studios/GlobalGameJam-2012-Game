@@ -21,10 +21,8 @@ void Powerup::Update(float)
 		player->powerups.push_back(this_powerup_type);
 
 		//for now, just show and enable the ice bridge
-		Universe::Instance()->_currentMap->platforms.at(0)->SetEnabled(true);
-		Universe::Instance()->_currentMap->platforms.at(0)->SetVisible(true);
-
-
+		//Universe::Instance()->_currentMap->platforms.at(0)->SetEnabled(true);
+		//Universe::Instance()->_currentMap->platforms.at(0)->SetVisible(true);
 		Universe::Instance()->RemoveAndDeleteSprite(this);
 	}
 }

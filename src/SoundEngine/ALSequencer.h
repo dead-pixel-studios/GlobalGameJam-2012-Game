@@ -2,6 +2,7 @@
 
 #include "ALOutput.h"
 #include "CWaves.h"
+#include "alut.h"
 
 const int MAX_SEQUENCE = 1024;
 const int MAX_FILES = 1024;
@@ -40,14 +41,21 @@ public:
 	WAVEID files[MAX_FILES];
 	WAVEID queue[MAX_SEQUENCE];
 
+	ALuint sfxSources[MAX_FILES];
+	ALuint sfxBuffers[MAX_FILES];
+
+	int sfxPos;
+
 	int fileCount;
 
-	WAVEID LoadFile(char* szFilename);
-	void QueueFile(WAVEID file);
+	WAVEID LoadMusic(char* szFilename);
+	void QueueMusic(WAVEID file);
 	WAVEID QueueAdvance();
 
 	int startPos;
 	int endPos;
 	int curPos;
 
+	ALuint LoadSFX(const char *fileName);
+	void PlaySFX(ALuint sfx);
 };

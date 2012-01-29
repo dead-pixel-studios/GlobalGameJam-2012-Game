@@ -11,6 +11,7 @@ Intro* Intro::Instance () {
 
 void Intro::Init() {
 	this->gEngine = CoreGraphics::Instance();
+
 	this->texture = gEngine->CreateTexture(CoreFunctions::GetAppPath() + "\\data\\intro.png");
 	this->texture->Load();
 

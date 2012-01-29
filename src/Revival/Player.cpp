@@ -24,6 +24,10 @@ Player::Player()
 	this->jumpleft_texture->Load();
 	this->jumpright_texture = gEngine->CreateTexture(CoreFunctions::GetAppPath() + "/data/Jump/JumpRight.png");
 	this->jumpright_texture->Load();
+	this->lavadeath_left = gEngine->CreateTexture(CoreFunctions::GetAppPath() + "/data/Deaths/Lava/Left.png");
+	this->lavadeath_left->Load();
+	this->lavadeath_right = gEngine->CreateTexture(CoreFunctions::GetAppPath() + "/data/Deaths/Lava/Right.png");
+	this->lavadeath_right->Load();
 
 	this->ghost_movingforward_sprites_texture = gEngine->CreateTexture(CoreFunctions::GetAppPath() + "/data/Ghost/Walking/WalkRight.png");
 	this->ghost_movingforward_sprites_texture->Load();
@@ -90,6 +94,11 @@ void Player::Update(float delta){
 			jumping = true;
 		}
 	}
+
+	//if(IsKeyDown(SDLK_LALT)) {
+	//	Universe * uni = Universe::Instance();
+	//	uni->seq->flEffectSends[0]=1.0;
+	//}
 
 	if(player1->IsConnected()) {
 		/*if(player1->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_RIGHT) {
@@ -220,38 +229,59 @@ void Player::Draw(){
 	if (currentDirection > 0) { 
 		// moving right
 		if(jumping) {
+				frames = 8;
 			this->texture = jumpright_texture;
+			if(_doomed) {
+				this->texture = lavadeath_right;
+				frames = 6;
+			}
 			if(dead) {
 				this->texture = ghost_jumpright_texture;
 			}
 		}
 		else {
+			frames = 8;
 			this->texture = movingforward_sprites_texture;
+			if(_doomed) {
+				this->texture = lavadeath_right;
+				frames = 6;
+			}
 			if(dead) {
 				this->texture = ghost_movingforward_sprites_texture;
 			}
 		}
-		frames = 8;
 	} else if (currentDirection < 0) {
+		frames = 8;
 		// moving left
 		if(jumping) {
 			this->texture = jumpleft_texture;
+			if(_doomed) {
+				this->texture = lavadeath_right;
+				frames = 6;
+			}
 			if(dead) {
 				this->texture = ghost_jumpleft_texture;
 			}
 		}
 		else {
 			this->texture = movingbackwards_sprites_texture;
+			if(_doomed) {
+				frames = 6;
+				this->texture = lavadeath_left;
+			}
 			if(dead) {
 				this->texture = ghost_movingbackwards_sprites_texture;
 			}
 		}
-		frames = 8;
 	} else {
 		// stationary
 		if(jumping) {
 			this->texture = jumpright_texture;
 			frames = 8;
+			if(_doomed) {
+				frames = 6;
+				this->texture = lavadeath_left;
+			}
 			if(dead) {
 				this->texture = ghost_jumpright_texture;
 			}
@@ -260,6 +290,10 @@ void Player::Draw(){
 			this->texture = staticiso_sprite_texture;
 			frames =1;
 			currentframe = 0;
+			if(_doomed) {
+				frames = 6;
+				this->texture = lavadeath_left;
+			}
 			if(dead) {
 				this->texture = ghost_staticiso_sprite_texture;
 			}
