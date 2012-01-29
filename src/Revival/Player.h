@@ -75,6 +75,11 @@ protected:
 
 	float death_accumulator;
 	float death_fade;
+
+	float zoom_accumulator;
+	float zoom;
+	bool zooming;
+
 	bool jumping;
 	bool _doomed;
 	bool dead;

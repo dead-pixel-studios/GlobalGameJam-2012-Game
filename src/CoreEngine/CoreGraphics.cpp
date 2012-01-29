@@ -44,6 +44,10 @@ void CoreGraphics::Init() {
 	fManager = new FPSmanager();
 	SDL_initFramerate(fManager);
 	SDL_setFramerate(fManager, 31);
+
+	xScale = 1.0F;
+	yScale = 1.0F;
+	zScale = 1.0F;
 }
 
 OpenGLTexture * CoreGraphics::CreateTexture(string textureLocation)
@@ -237,6 +241,8 @@ void CoreGraphics::glEnable2D()
 	glPushAttrib(GL_DEPTH_BUFFER_BIT);
 	glDisable(GL_DEPTH_TEST);
 	glDisable(GL_LIGHTING);
+
+	glScalef(xScale,yScale,zScale);
 }
 
 void CoreGraphics::glDisable2D()
@@ -293,4 +299,11 @@ Uint32 CoreGraphics::getPixel(SDL_Surface * surface, int x, int y) {
 	default:
 		return 0;       /* shouldn't happen, but avoids warnings */
 	}
+}
+
+void CoreGraphics::ScaleWorld(float x, float y, float z)
+{
+	xScale = x;
+	yScale = y;
+	zScale = y;
 }

@@ -70,6 +70,9 @@ Player::Player()
 	_time_elapsed=0;
 	death_accumulator = 0;
 	death_fade = 1.0F;
+	zooming = false;
+	zoom_accumulator = 0;
+	zoom = 1.0F;
 
 	this->player1 = new CoreController(1);
 }
@@ -98,6 +101,10 @@ void Player::Update(float delta)
 			Velocity = -30.0F;
 			jumping = true;
 		}
+	}
+
+	if(IsKeyDown(SDLK_RSHIFT)) {
+		zooming = true;
 	}
 
 	//if(IsKeyDown(SDLK_LALT)) {
@@ -146,6 +153,16 @@ void Player::Update(float delta)
 			if(death_fade <= 0.0F) {
 				GameOver::Instance()->GameIsOver();
 			}
+		}
+	}
+
+	if(zooming) {
+		zoom_accumulator = zoom_accumulator + delta;
+		if(zoom_accumulator > 10) {
+			zoom_accumulator = delta - zoom_accumulator;
+
+			zoom += 0.5F;
+			gEngine->ScaleWorld(zoom,zoom,zoom);
 		}
 	}
 
