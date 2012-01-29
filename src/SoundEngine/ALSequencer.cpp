@@ -9,6 +9,7 @@ ALSequencer::ALSequencer()
 	startPos =
 	endPos = 0;
 	curPos = MAX_SEQUENCE;
+	sfxPos = 0;
 
 	pWaveLoader = NULL;
 
@@ -31,6 +32,8 @@ ALSequencer::ALSequencer()
 	pEffectOutput[3] = 0;
 
 	if (InitializeOpenAL(NULL, 2, 4, 10240, 44100)) {
+		alutInitWithoutContext(NULL, NULL);
+
 		ulOutputChannels = GetNumOutputChannels();
 		ulNumEffects = GetNumEffects();
 		ulNumSamples = GetNumSamplesPerBuffer();
@@ -67,6 +70,8 @@ ALSequencer::~ALSequencer()
 	WaitForSingleObject(hThread, INFINITE);
 
 	Stop();
+
+	alutExit();
 
 	ShutdownOpenAL();
 
@@ -164,7 +169,7 @@ void ALSequencer::MixData(unsigned long ulNumSamples, unsigned long ulOutputChan
 	}
 }
 
-WAVEID ALSequencer::LoadFile(char* szFilename)
+WAVEID ALSequencer::LoadMusic(char* szFilename)
 {
 	if (fileCount == MAX_FILES) {
 		return -1;
@@ -174,7 +179,7 @@ WAVEID ALSequencer::LoadFile(char* szFilename)
 	return files[fileCount++];
 }
 
-void ALSequencer::QueueFile(WAVEID file)
+void ALSequencer::QueueMusic(WAVEID file)
 {
 	queue[endPos] = file;
 	endPos++;
@@ -189,3 +194,15 @@ WAVEID ALSequencer::QueueAdvance()
 	return curPos;
 }
 
+ALuint ALSequencer::LoadSFX(const char *fileName)
+{
+  sfxBuffers[sfxPos] = alutCreateBufferFromFile(fileName);
+  alGenSources(1, &sfxSources[sfxPos]);
+  alSourcei(sfxSources[sfxPos], AL_BUFFER, sfxBuffers[sfxPos]);
+  return sfxPos++;  
+}
+
+void ALSequencer::PlaySFX(ALuint sfx)
+{
+	alSourcePlay(sfxSources[sfx]);
+}

@@ -3,6 +3,7 @@
 #include "../CoreEngine/CoreGraphics.h"
 #include "Map.h"
 #include <set>
+#include "../SoundEngine/ALSequencer.h"
 
 class CoreGraphics;
 class SpriteBase;
@@ -25,6 +26,7 @@ public:
 
 	Map *_currentMap;
 	SpriteBase *_focus;
+		ALSequencer * seq;
 
 	CorePosition _worldOffset;
 protected:
@@ -39,6 +41,10 @@ private:
 	SpriteSet _sprites;
 	SpriteSet _deletes;
 	KeySet _keys;
+
+
+	WAVEID one;
+	WAVEID two;
 };
 
 #include "SpriteBase.h"

@@ -5,6 +5,7 @@
 #include <list>
 #include "Powerup.h"
 #include "../CoreEngine/CoreController.h"
+#include "GameOver.h"
 
 class DeadPlayer;
 
@@ -44,6 +45,9 @@ protected:
 	OpenGLTexture *jumpleft_texture;
 	OpenGLTexture *jumpright_texture;
 
+	OpenGLTexture *lavadeath_left;
+	OpenGLTexture *lavadeath_right;
+
 	OpenGLTexture *ghost_movingforward_sprites_texture;
 	OpenGLTexture *ghost_movingbackwards_sprites_texture;
 	OpenGLTexture *ghost_staticiso_sprite_texture;
@@ -68,6 +72,9 @@ protected:
 	float jump_time_length_secs;
 	float jump_current_velocity_pixels_sec;
 	float jump_elapsed;
+
+	float death_accumulator;
+	float death_fade;
 	bool jumping;
 	bool _doomed;
 	bool dead;

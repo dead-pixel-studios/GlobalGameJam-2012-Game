@@ -24,6 +24,10 @@ Player::Player()
 	this->jumpleft_texture->Load();
 	this->jumpright_texture = gEngine->CreateTexture(CoreFunctions::GetAppPath() + "/data/Jump/JumpRight.png");
 	this->jumpright_texture->Load();
+	this->lavadeath_left = gEngine->CreateTexture(CoreFunctions::GetAppPath() + "/data/Deaths/Lava/Left.png");
+	this->lavadeath_left->Load();
+	this->lavadeath_right = gEngine->CreateTexture(CoreFunctions::GetAppPath() + "/data/Deaths/Lava/Right.png");
+	this->lavadeath_right->Load();
 
 	this->ghost_movingforward_sprites_texture = gEngine->CreateTexture(CoreFunctions::GetAppPath() + "/data/Ghost/Walking/WalkRight.png");
 	this->ghost_movingforward_sprites_texture->Load();
@@ -64,11 +68,14 @@ Player::Player()
 	frame_accumulator = 0;
 	lastupdatepos = _pos;
 	_time_elapsed=0;
+	death_accumulator = 0;
+	death_fade = 1.0F;
 
 	this->player1 = new CoreController(1);
 }
 
-void Player::Update(float delta){
+void Player::Update(float delta)
+{
 	_time_elapsed+=delta;
 
 	float move = 0.0F;
@@ -93,26 +100,12 @@ void Player::Update(float delta){
 		}
 	}
 
-	if(player1->IsConnected()) {
-		/*if(player1->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_RIGHT) {
-			move = maxpixels_persecond_speed * delta * MOVEMENT_FORWARD;
-			currentDirection = MOVEMENT_FORWARD;
-			RecordEvent(EventType::Left);
-		}
-		else if(player1->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_LEFT) {
-			move = maxpixels_persecond_speed * delta * MOVEMENT_BACKWARD;
-			currentDirection =MOVEMENT_BACKWARD;
-			RecordEvent(EventType::Right);
-		}
-		else if(player1->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_UP) {
-			RecordEvent(EventType::Jump);
-			if (jumping != true) {
-				Velocity = -30.0F;
-				jumping = true;
-			}
-		}
-		*/
+	//if(IsKeyDown(SDLK_LALT)) {
+	//	Universe * uni = Universe::Instance();
+	//	uni->seq->flEffectSends[0]=1.0;
+	//}
 
+	if(player1->IsConnected()) {
 		thumblx = player1->GetState().Gamepad.sThumbLX;
 		thumbly = player1->GetState().Gamepad.sThumbLY;
 
@@ -132,6 +125,18 @@ void Player::Update(float delta){
 			if (jumping != true) {
 				Velocity = -30.0F;
 				jumping = true;
+			}
+		}
+	}
+
+	if(dead) {
+		death_accumulator = death_accumulator + delta;
+		if(death_accumulator > 100) {
+			death_accumulator = delta-death_accumulator;
+			death_fade -= 0.05F;
+
+			if(death_fade <= 0.0F) {
+				GameOver::Instance()->GameIsOver();
 			}
 		}
 	}
@@ -191,7 +196,7 @@ void Player::Update(float delta){
 		_health-=10;
 	}
 	
-	if(_health<=0){
+	if(_health<=0) {
 		RecordEvent(EventType::Die);
 		//fade out
 		//_visible=false;
@@ -207,7 +212,8 @@ void Player::Update(float delta){
 	}
 }
 
-void Player::Draw(){
+void Player::Draw()
+{
 	CorePosition cpoint1=_lpoint1-Universe::Instance()->_worldOffset;
 	CorePosition cpoint2=_lpoint1-Universe::Instance()->_worldOffset;
 
@@ -222,38 +228,59 @@ void Player::Draw(){
 	if (currentDirection > 0) { 
 		// moving right
 		if(jumping) {
+				frames = 8;
 			this->texture = jumpright_texture;
+			if(_doomed) {
+				this->texture = lavadeath_right;
+				frames = 6;
+			}
 			if(dead) {
 				this->texture = ghost_jumpright_texture;
 			}
 		}
 		else {
+			frames = 8;
 			this->texture = movingforward_sprites_texture;
+			if(_doomed) {
+				this->texture = lavadeath_right;
+				frames = 6;
+			}
 			if(dead) {
 				this->texture = ghost_movingforward_sprites_texture;
 			}
 		}
-		frames = 8;
 	} else if (currentDirection < 0) {
+		frames = 8;
 		// moving left
 		if(jumping) {
 			this->texture = jumpleft_texture;
+			if(_doomed) {
+				this->texture = lavadeath_right;
+				frames = 6;
+			}
 			if(dead) {
 				this->texture = ghost_jumpleft_texture;
 			}
 		}
 		else {
 			this->texture = movingbackwards_sprites_texture;
+			if(_doomed) {
+				frames = 6;
+				this->texture = lavadeath_left;
+			}
 			if(dead) {
 				this->texture = ghost_movingbackwards_sprites_texture;
 			}
 		}
-		frames = 8;
 	} else {
 		// stationary
 		if(jumping) {
 			this->texture = jumpright_texture;
 			frames = 8;
+			if(_doomed) {
+				frames = 6;
+				this->texture = lavadeath_left;
+			}
 			if(dead) {
 				this->texture = ghost_jumpright_texture;
 			}
@@ -262,6 +289,10 @@ void Player::Draw(){
 			this->texture = staticiso_sprite_texture;
 			frames =1;
 			currentframe = 0;
+			if(_doomed) {
+				frames = 6;
+				this->texture = lavadeath_left;
+			}
 			if(dead) {
 				this->texture = ghost_staticiso_sprite_texture;
 			}
@@ -273,7 +304,13 @@ void Player::Draw(){
 		CorePosition drawPosition=_pos;
 		drawPosition.SetX(drawPosition.GetX()-Universe::Instance()->_worldOffset.GetX());
 		drawPosition.SetY(drawPosition.GetY()-Universe::Instance()->_worldOffset.GetY());
-		this->gEngine->DrawTextureFrame(texture,&drawPosition,&_origin,&_size,_angle,frames,currentframe);
+
+		if(dead) {
+				this->gEngine->DrawTextureFrame(texture,&drawPosition,&_origin,&_size,_angle,frames,currentframe,1.0F,1.0F,1.0F,death_fade);
+		}
+		else {
+			this->gEngine->DrawTextureFrame(texture,&drawPosition,&_origin,&_size,_angle,frames,currentframe,1.0F,1.0F,1.0F);
+		}
 	}
 
 	// Draw the two ray-tracing dots (over the sprite)

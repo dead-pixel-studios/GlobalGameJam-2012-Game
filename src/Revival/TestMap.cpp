@@ -19,14 +19,41 @@ TestMap::TestMap()
 	collision = gEngine->CreateTexture(CoreFunctions::GetAppPath() + "/data/Level1/Collision.png");
 	collision->Load();
 
-	lava1 = gEngine->CreateTexture(CoreFunctions::GetAppPath() + "/data/Level1/Lava1.png");
+	lava1 = gEngine->CreateTexture(CoreFunctions::GetAppPath() + "/data/Level1/Lava/1.png");
 	lava1->Load();
 
-	lava2 = gEngine->CreateTexture(CoreFunctions::GetAppPath() + "/data/Level1/Lava2.png");
+	lava2 = gEngine->CreateTexture(CoreFunctions::GetAppPath() + "/data/Level1/Lava/2.png");
 	lava2->Load();
 
-	lava3 = gEngine->CreateTexture(CoreFunctions::GetAppPath() + "/data/Level1/Lava3.png");
+	lava3 = gEngine->CreateTexture(CoreFunctions::GetAppPath() + "/data/Level1/Lava/3.png");
 	lava3->Load();
+
+	lava4 = gEngine->CreateTexture(CoreFunctions::GetAppPath() + "/data/Level1/Lava/4.png");
+	lava4->Load();
+
+	lava5 = gEngine->CreateTexture(CoreFunctions::GetAppPath() + "/data/Level1/Lava/5.png");
+	lava5->Load();
+
+	lava6 = gEngine->CreateTexture(CoreFunctions::GetAppPath() + "/data/Level1/Lava/6.png");
+	lava6->Load();
+
+	lava7 = gEngine->CreateTexture(CoreFunctions::GetAppPath() + "/data/Level1/Lava/7.png");
+	lava7->Load();
+
+	lava8 = gEngine->CreateTexture(CoreFunctions::GetAppPath() + "/data/Level1/Lava/8.png");
+	lava8->Load();
+
+	lava9 = gEngine->CreateTexture(CoreFunctions::GetAppPath() + "/data/Level1/Lava/9.png");
+	lava9->Load();
+
+	lava10 = gEngine->CreateTexture(CoreFunctions::GetAppPath() + "/data/Level1/Lava/10.png");
+	lava10->Load();
+
+	lava11 = gEngine->CreateTexture(CoreFunctions::GetAppPath() + "/data/Level1/Lava/11.png");
+	lava11->Load();
+
+	lava12 = gEngine->CreateTexture(CoreFunctions::GetAppPath() + "/data/Level1/Lava/12.png");
+	lava12->Load();
 
 	killzone = gEngine->CreateTexture(CoreFunctions::GetAppPath() + "/data/Level1/KillZone.png");
 	killzone->Load();
@@ -43,7 +70,7 @@ TestMap::TestMap()
 	this->_icePlatform = new Platform(CorePosition(700, 1000));
 	Universe::Instance()->AddSprite(_icePlatform);
 	this->platforms.push_back(_icePlatform);
-	
+
 	_visible=true;
 	lavaStep = 0;
 
@@ -65,7 +92,7 @@ void TestMap::Update(float fTime)
 	if(lavaaccumulator > 100) {
 		lavaaccumulator = fTime-lavaaccumulator;
 		lavaStep++;
-		if(lavaStep>2) { lavaStep = 0; }
+		if(lavaStep>11) { lavaStep = 0; }
 	}
 }
 
@@ -88,6 +115,33 @@ void TestMap::Draw()
 		case 2:
 			this->gEngine->DrawTexture(lava3,&adjpos,&centerPoint,&_size,_angle);
 			break;
+		case 3:
+			this->gEngine->DrawTexture(lava4,&adjpos,&centerPoint,&_size,_angle);
+			break;
+		case 4:
+			this->gEngine->DrawTexture(lava5,&adjpos,&centerPoint,&_size,_angle);
+			break;
+		case 5:
+			this->gEngine->DrawTexture(lava6,&adjpos,&centerPoint,&_size,_angle);
+			break;
+		case 6:
+			this->gEngine->DrawTexture(lava7,&adjpos,&centerPoint,&_size,_angle);
+			break;
+		case 7:
+			this->gEngine->DrawTexture(lava8,&adjpos,&centerPoint,&_size,_angle);
+			break;
+		case 8:
+			this->gEngine->DrawTexture(lava9,&adjpos,&centerPoint,&_size,_angle);
+			break;
+		case 9:
+			this->gEngine->DrawTexture(lava10,&adjpos,&centerPoint,&_size,_angle);
+			break;
+		case 10:
+			this->gEngine->DrawTexture(lava11,&adjpos,&centerPoint,&_size,_angle);
+			break;
+		case 11:
+			this->gEngine->DrawTexture(lava12,&adjpos,&centerPoint,&_size,_angle);
+			break;
 		}
 		this->gEngine->DrawTexture(foregroundMist,&_foregroundmistPos,&centerPoint,&_size,_angle);
 
@@ -104,7 +158,7 @@ void TestMap::Draw()
 }
 
 CoreColor TestMap::GetPixel(CorePosition pos){
-		return gEngine->getPixelColor(collision->GetSurface(), pos.GetX(), pos.GetY());
+	return gEngine->getPixelColor(collision->GetSurface(), pos.GetX(), pos.GetY());
 }
 
 bool TestMap::IsKillZone(CorePosition pos){

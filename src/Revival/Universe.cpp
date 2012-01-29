@@ -42,6 +42,9 @@ Universe* Universe::Instance () {
 }
 
 void Universe::Init() {
+		seq = new ALSequencer();
+	one = seq->LoadMusic("data\\Audio\\Loop_2.wav");
+	seq->bPlay = true;
 	_currentMap=new TestMap();
 	AddSprite(_currentMap);
 	_focus=new Player();
@@ -56,7 +59,7 @@ void Universe::Update(float fTime)
 {
 	CorePosition focusPos=_focus->GetPosition();
 	focusPos.SetX(focusPos.GetX()-512);
-	focusPos.SetY(focusPos.GetY()-384);
+	focusPos.SetY(focusPos.GetY()-100);
 	focusPos.SetX(focusPos.GetX()+_focus->GetSize().GetWidth()/2);
 	focusPos.SetY(focusPos.GetY()+_focus->GetSize().GetHeight()/2);
 	_worldOffset=focusPos;

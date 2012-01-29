@@ -4,6 +4,7 @@
 #include "../CoreEngine/CoreFunctions.h"
 #include "../Revival/Universe.h"
 #include "../Revival/Intro.h"
+#include "../Revival/GameOver.h"
 
 class CoreGraphics;
 
@@ -29,5 +30,6 @@ private:
 
 	Universe * universe;
 	Intro * intro;
+	GameOver * gameOver;
 	void Init();
 };
