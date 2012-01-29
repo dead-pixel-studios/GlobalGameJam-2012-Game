@@ -1,11 +1,11 @@
 #pragma once
 
 #include "../CoreEngine/CoreGraphics.h"
-#include "SpriteBase.h"
 #include "Map.h"
 #include <set>
 
 class CoreGraphics;
+class SpriteBase;
 
 class Universe {
 public:
@@ -40,3 +40,5 @@ private:
 	SpriteSet _deletes;
 	KeySet _keys;
 };
+
+#include "SpriteBase.h"

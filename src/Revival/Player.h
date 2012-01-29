@@ -5,24 +5,28 @@
 #include <list>
 #include "Powerup.h"
 
+class DeadPlayer;
+
 namespace EventType{
 	enum Enum{
+		None,
 		Left,
 		Right,
 		Jump,
 		Die
-	}
+	};
 }
 
 struct PlayerEvent{
 	double time;
 	EventType::Enum type;
+	CorePosition pos;
 };
 
 typedef std::list<PlayerEvent> EventList;
 
 class Player : public SpriteBase{
-private:
+protected:
 	bool _hitFloor;
 	
 	int currentDirection;
@@ -59,7 +63,6 @@ private:
 
 	bool WorldCollisionCheck();
 	void RecordEvent(EventType::Enum event);
-protected:
 	CorePosition LandPoint(CorePosition point);
 public:
 	vector<PowerupType::Enum> powerups;
@@ -67,3 +70,5 @@ public:
 	virtual void Update(float dT);
 	virtual void Draw();
 };
+
+#include "DeadPlayer.h"

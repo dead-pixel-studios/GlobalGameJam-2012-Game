@@ -126,13 +126,17 @@ void Player::Update(float delta){
 	if(_doomed) _health-=10;
 	
 	if(_health<=0){
+		RecordEvent(EventType::Die);
 		//fade out
 		//_visible=false;
 		_pos=CorePosition(0,0);
 		_health=100;
 		_doomed=false;
 		std::cout << "DIED!" << std::endl;
-		RecordEvent(EventType::Die);
+
+		DeadPlayer *dp=new DeadPlayer(_recorded_events);
+		Universe::Instance()->AddSprite(dp);
+		dp->Start();
 	}
 
 	
@@ -241,5 +245,6 @@ void Player::RecordEvent(EventType::Enum type){
 	PlayerEvent evt;
 	evt.time=_time_elapsed;
 	evt.type=type;
+	evt.pos=_pos;
 	_recorded_events.push_back(evt);
 }

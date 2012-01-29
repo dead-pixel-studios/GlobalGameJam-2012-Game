@@ -1,7 +1,8 @@
 #pragma once
 
 #include "SpriteBase.h"
-#include "Platform.h"
+
+class Platform;
 
 class Map : public SpriteBase 
 {
@@ -10,3 +11,5 @@ public:
 	vector<Platform*> platforms;
 	virtual bool IsKillZone(CorePosition pos)=0;
 };
+
+#include "Platform.h"
