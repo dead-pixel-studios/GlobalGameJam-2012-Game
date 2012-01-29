@@ -86,14 +86,17 @@ void Intro::Update(float fTime)
 		}
 	}
 
-	if(Universe::Instance()->IsKeyDown(SDLK_SPACE)) {
-		this->haveFinishedIntro = true;
-	}
-
-	if(player1->IsConnected()) {
-		if(player1->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_START) {
-			this->haveFinishedIntro = true;
-		}
+	if(!this->loading) {
+			if(!fadeIn) {
+				if(Universe::Instance()->IsKeyDown(SDLK_SPACE)) {
+					this->haveFinishedIntro = true;
+				}
+				if(player1->IsConnected()) {
+					if(player1->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_START) {
+						this->haveFinishedIntro = true;
+					}
+				}
+			}
 	}
 }
 
