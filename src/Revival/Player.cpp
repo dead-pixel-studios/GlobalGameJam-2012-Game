@@ -360,10 +360,11 @@ CorePosition Player::LandPoint(CorePosition point){
 	startPoint.SetY(0);
 	startPoint.SetX(_pos.GetX()+point.GetX());
 	int mapHeight=Universe::Instance()->_currentMap->GetSize().GetHeight();
-	int checkPoint=mapHeight/2, loop=0;
+	int checkPoint=mapHeight/2, loop=1;
 	while(!found){
+		++loop;
 		bool hit=false;
-		if(startPoint.GetY()>mapHeight) break; // don't go on forever
+		if(startPoint.GetY()>mapHeight)	throw 0; // don't go on forever
 		startPoint.SetY(checkPoint);
 
 		int count = (int) Universe::Instance()->_currentMap->platforms.size();
@@ -387,11 +388,11 @@ CorePosition Player::LandPoint(CorePosition point){
 			break;
 		}
 
-		if(hit)checkPoint-=mapHeight/(1 << loop);
-		else checkPoint+=mapHeight/(1 << loop);
-		++loop;
+		int chgval=mapHeight/(1 << loop);
+
+		if(hit)checkPoint-=chgval;
+		else checkPoint+=chgval;
 	}
-	std::cout << startPoint.GetX() << ',' << startPoint.GetY() << std::endl;
 	return startPoint;
 }
 
