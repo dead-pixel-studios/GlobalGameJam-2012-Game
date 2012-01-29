@@ -73,10 +73,10 @@ void Player::Update(float delta){
 	CorePosition lpoint2 = LandPoint(_point2);
 
 	jump_elapsed += delta / 100;
-	if(jump_elapsed >= jump_time_length_secs) {
-		jumping = false;
-		jump_elapsed = 0.0F;
-	}
+	//if(jump_elapsed >= jump_time_length_secs) {
+		//jumping = false;
+		//jump_elapsed = 0.0F;
+	//}
 
 	Velocity += Gravity;
 
@@ -86,6 +86,7 @@ void Player::Update(float delta){
 	if(_pos.GetY() > lpoint1.GetY()-_size.GetHeight()) {
 		Velocity = 0;
 		_pos.SetY(lpoint1.GetY()-_size.GetHeight());
+		jumping = false;
 	}
 
 	// move X (left right)
