@@ -388,7 +388,7 @@ CorePosition Player::LandPoint(CorePosition point){
 		startPoint.SetY(cy);
 		bool hit=IsHit(startPoint);
 		if(hit){
-			while(!Universe::Instance()->_currentMap->GetPixel(CorePosition(startPoint.GetX(), startPoint.GetY()-1)).rgba()==-0x000000ff){
+			while(IsHit(CorePosition(startPoint.GetX(), startPoint.GetY()-1))){
 				startPoint.SetY(startPoint.GetY()-1);
 			}
 			break;
