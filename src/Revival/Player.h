@@ -4,6 +4,7 @@
 #include <vector>
 #include <list>
 #include "Powerup.h"
+#include "../CoreEngine/CoreController.h"
 
 class DeadPlayer;
 
@@ -28,6 +29,8 @@ struct PlayerEvent{
 typedef std::list<PlayerEvent> EventList;
 
 class Player : public SpriteBase{
+private:
+	CoreController * player1;
 protected:
 	bool _hitFloor;
 	
@@ -63,6 +66,9 @@ protected:
 
 	int _health;
 	double _time_elapsed;
+
+	int thumblx;
+	int thumbly;
 
 	EventList _recorded_events;
 
