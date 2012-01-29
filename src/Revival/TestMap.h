@@ -1,15 +1,16 @@
 #pragma once
 
-#include "SpriteBase.h"
-#include "Powerup.h"
 #include "Map.h"
+#include "Powerup.h"
+#include "Platform.h"
+#include "SpriteBase.h"
+#include <vector>
 
 class TestMap :  public Map {
 public:
 	TestMap();
 	void Update(float);
 	void Draw();
-
 	CoreColor GetPixel(CorePosition pos);
 	bool IsKillZone(CorePosition pos);
 private:
@@ -30,6 +31,8 @@ private:
 	OpenGLTexture * killzone;
 
 	Powerup * _pwrUp;
+	Platform * _icePlatform;
+
 
 	int lavaStep;
 };

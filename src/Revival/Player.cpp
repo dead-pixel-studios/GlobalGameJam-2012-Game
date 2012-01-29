@@ -1,6 +1,8 @@
 #include "Universe.h"
 #include "Player.h"
 #include "Intro.h"
+#include "TestMap.h"
+#include "Map.h"
 
 #include <iostream>
 #include <cmath>
@@ -49,10 +51,10 @@ void Player::Update(float delta){
 
 
 	float move = 0.0F;
-	if(IsKeyDown(SDLK_RIGHT) || IsKeyDown(SDLK_a)){
+	if(IsKeyDown(SDLK_RIGHT) || IsKeyDown(SDLK_d)){
 		move = maxpixels_persecond_speed * delta * MOVEMENT_FORWARD;
 		currentDirection = MOVEMENT_FORWARD;
-	} else if (IsKeyDown(SDLK_LEFT) || IsKeyDown(SDLK_d)){
+	} else if (IsKeyDown(SDLK_LEFT) || IsKeyDown(SDLK_a)){
 		move = maxpixels_persecond_speed * delta * MOVEMENT_BACKWARD;
 		currentDirection =MOVEMENT_BACKWARD;
 	} else {
@@ -91,8 +93,9 @@ void Player::Update(float delta){
 	float min_x = 0.0F;
 	float max_x = (float) Universe::Instance()->_currentMap->GetSize().GetWidth() - this->_size.GetWidth();
 	if(wantedx >= min_x && wantedx <= max_x) {
-		_pos.SetX((float) wantedx);
+		_pos.SetX((int) wantedx);
 	}
+
 	// rotation using ray-tracing
 	double angle=atan2((double)lpoint2.GetY() - lpoint1.GetY(), (double)lpoint2.GetX() - lpoint1.GetX()) * 180 / 3.14159;
 	if(angle>60.0) angle=60.0;
@@ -187,6 +190,11 @@ bool Player::WorldCollisionCheck(){
 }
 
 CorePosition Player::LandPoint(CorePosition point){
+
+	// ray trace down from point
+	// using the map, find the hit layer and return the top pixel in y-axis as a coreposition
+	// check any visible platforms first and return them if valid
+
 	bool hit=false;
 
 	CorePosition startPoint=point;
@@ -196,10 +204,18 @@ CorePosition Player::LandPoint(CorePosition point){
 		startPoint.SetY(startPoint.GetY()+1);
 		if(startPoint.GetY()>6000) break; // don't go on forever, give up after 6000 down
 
+		int count = (int) Universe::Instance()->_currentMap->platforms.size();
+		for(int i = 0; i < count; i++) {
+			Platform * element = Universe::Instance()->_currentMap->platforms.at(i);
+			CoreColor temp = element->GetPixel(startPoint);
+			Uint32 tempcol = temp.rgba();
+		}
+
 		CoreColor pxl=Universe::Instance()->_currentMap->GetPixel(startPoint);
 		Uint32 col=pxl.rgba();
-
-		hit=(col==0x000000ff);
+		if (!hit) {
+			hit=(col==0x000000ff);
+		}
 	}
 	return startPoint;
 }

@@ -94,7 +94,7 @@ void Universe::KeyUp(SDLKey key){
 }
 
 bool Universe::IsKeyDown(SDLKey key){
-	return _keys.count(key);
+	return (bool) _keys.count(key);
 }
 
 SpriteSet Universe::CollisionDetect(CorePosition pos, CoreSize size, SpriteBase *ignore){

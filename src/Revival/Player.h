@@ -1,6 +1,8 @@
 #pragma once
 
 #include "SpriteBase.h"
+#include <vector>
+#include "Powerup.h"
 
 class Player : public SpriteBase{
 private:
@@ -34,10 +36,10 @@ private:
 
 	bool WorldCollisionCheck();
 	CorePosition LandPoint(CorePosition point);
-	int tits;
-
 	int _health;
+
 public:
+	vector<PowerupType::Enum> powerups;
 	Player();
 	void Update(float dT);
 	void Draw();
