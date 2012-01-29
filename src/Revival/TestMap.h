@@ -14,8 +14,9 @@ public:
 	CoreColor GetPixel(CorePosition pos);
 	bool IsKillZone(CorePosition pos);
 private:
-	float lastMistScroll;
-	float lastLavaChange;
+	float mistaccumulator;
+	float lavaaccumulator;
+
 	CorePosition _backgroundmistPos;
 	CorePosition _foregroundmistPos;
 
@@ -32,7 +33,6 @@ private:
 
 	Powerup * _pwrUp;
 	Platform * _icePlatform;
-
 
 	int lavaStep;
 };

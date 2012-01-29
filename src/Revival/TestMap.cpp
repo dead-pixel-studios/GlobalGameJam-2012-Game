@@ -45,24 +45,25 @@ TestMap::TestMap()
 	this->platforms.push_back(_icePlatform);
 	
 	_visible=true;
-	lastMistScroll = 0.0F;
-	lastLavaChange = 0.0F;
 	lavaStep = 0;
+
+	mistaccumulator = 0;
+	lavaaccumulator = 0;
 }
 
 void TestMap::Update(float fTime)
 {
-	/*if(fTime-lastMistScroll > 10) {
-		lastMistScroll = fTime;
-		if(_pos.GetY()>0-768) {
-			_pos.SetY(_pos.GetY()-1);
-		}
+	mistaccumulator = mistaccumulator + fTime;
+	lavaaccumulator = lavaaccumulator + fTime;
+
+	if(mistaccumulator > 10) {
+		mistaccumulator = fTime-mistaccumulator;
 		_backgroundmistPos.SetX(_backgroundmistPos.GetX() - 1);
 		_foregroundmistPos.SetX(_foregroundmistPos.GetX() - 2);
-	}*/
+	}
 
-	if(fTime-lastLavaChange > 100) {
-		lastLavaChange = fTime;
+	if(lavaaccumulator > 100) {
+		lavaaccumulator = fTime-lavaaccumulator;
 		lavaStep++;
 		if(lavaStep>2) { lavaStep = 0; }
 	}
