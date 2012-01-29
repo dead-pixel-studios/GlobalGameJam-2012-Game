@@ -16,6 +16,7 @@
 using namespace std;
 
 class CoreColor;
+class Player;
 
 class CoreGraphics
 {
@@ -33,6 +34,9 @@ public:
 	CoreColor getPixelColor(SDL_Surface * surface, int x, int y);
 	CoreSize * GetScreenSize() { return ScreenSize; }
 	FPSmanager * getFPSManager() { return fManager; }
+
+	void glEnable2D();
+	void glDisable2D();
 protected:
 	CoreGraphics(void) {};
 	CoreGraphics(const CoreGraphics&);
@@ -45,8 +49,6 @@ private:
 	CoreSize * ScreenSize;
 	void Init();
 
-	void glEnable2D();
-	void glDisable2D();
 	SDL_Surface * GetPow2Surface(SDL_Surface * surface);
 	Uint32 getPixel(SDL_Surface * surface, int x, int y);
 

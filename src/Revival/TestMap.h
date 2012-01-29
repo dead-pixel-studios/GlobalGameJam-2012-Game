@@ -13,6 +13,8 @@ public:
 	void Draw();
 	CoreColor GetPixel(CorePosition pos);
 	bool IsKillZone(CorePosition pos);
+	
+	bool winnable();
 private:
 	float mistaccumulator;
 	float lavaaccumulator;

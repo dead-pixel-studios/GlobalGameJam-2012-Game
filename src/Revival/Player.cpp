@@ -71,6 +71,7 @@ Player::Player()
 	death_accumulator = 0;
 	death_fade = 1.0F;
 	zooming = false;
+	zoomin = true;
 	zoom_accumulator = 0;
 	zoom = 1.0F;
 
@@ -105,6 +106,8 @@ void Player::Update(float delta)
 
 	if(IsKeyDown(SDLK_RSHIFT)) {
 		zooming = true;
+		zoomin = true;
+		zoom = 1.0;
 	}
 
 	//if(IsKeyDown(SDLK_LALT)) {
@@ -142,13 +145,21 @@ void Player::Update(float delta)
 				jumping = true;
 			}
 		}
+
+		if(player1->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_X) {
+			if(powerups.size()>0) {
+			Powerup * pwrup = powerups.at(0);
+			pwrup->Use();
+			powerups.erase(powerups.begin());
+		}
+		}
 	}
 
 	if(dead) {
 		death_accumulator = death_accumulator + delta;
 		if(death_accumulator > 100) {
 			death_accumulator = delta-death_accumulator;
-		//	death_fade -= 0.05F;
+			death_fade -= 0.009F;
 
 			if(death_fade <= 0.0F) {
 				GameOver::Instance()->GameIsOver();
@@ -161,7 +172,23 @@ void Player::Update(float delta)
 		if(zoom_accumulator > 10) {
 			zoom_accumulator = delta - zoom_accumulator;
 
-			zoom += 0.5F;
+			if(zoomin) {
+				zoom += 0.5F;
+			}
+			else {
+				zoom -= 0.5F;
+			}
+
+			if(zoom>5.0) {
+				zoomin = false;
+			}
+
+			if(!zoomin) {
+				if(zoom<=1.0) {
+					zoom = 1.0;
+					zooming = false;
+				}
+			}
 			gEngine->ScaleWorld(zoom,zoom,zoom);
 		}
 	}
@@ -197,8 +224,8 @@ void Player::Update(float delta)
 
 	// rotation using ray-tracing
 	double angle=atan2((double)lpoint2.GetY() - lpoint1.GetY(), (double)lpoint2.GetX() - lpoint1.GetX()) * 180 / 3.14159;
-	if(angle>60.0) angle=60.0;
-	if(angle<-60.0) angle=-60.0;
+	if(angle>30.0) angle=30.0;
+	if(angle<-30.0) angle=-30.0;
 	if(angle<=0) angle+=360.0;
 	_angle=(float) angle;
 
@@ -457,4 +484,13 @@ void Player::RecordEvent(EventType::Enum type){
 	evt.currentframe=currentframe;
 	evt.frames=frames;
 	_recorded_events.push_back(evt);
+}
+
+void Player::BackFromTheDead(CorePosition pos)
+{
+	this->dead = false;
+	this->_pos = pos;
+	zooming = true;
+	zoomin = true;
+	zoom = 1.0;
 }

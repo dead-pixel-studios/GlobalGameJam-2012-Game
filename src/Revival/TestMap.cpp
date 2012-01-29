@@ -177,3 +177,8 @@ bool TestMap::IsKillZone(CorePosition pos){
 	}
 	return ret;
 }
+
+bool TestMap::winnable()
+{
+	return platforms.at(0)->IsVisible();
+}

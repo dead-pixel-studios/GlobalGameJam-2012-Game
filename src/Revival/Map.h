@@ -10,6 +10,7 @@ public:
 	Map() {_solid=false;}
 	vector<Platform*> platforms;
 	virtual bool IsKillZone(CorePosition pos)=0;
+	virtual bool winnable()=0;
 };
 
 #include "Platform.h"

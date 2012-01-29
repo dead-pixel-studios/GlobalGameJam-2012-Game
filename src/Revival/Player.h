@@ -31,7 +31,8 @@ struct PlayerEvent{
 
 typedef std::list<PlayerEvent> EventList;
 
-class Player : public SpriteBase{
+class Player : public SpriteBase
+{
 private:
 	CoreController * player1;
 protected:
@@ -79,6 +80,7 @@ protected:
 	float zoom_accumulator;
 	float zoom;
 	bool zooming;
+	bool zoomin;
 
 	bool jumping;
 	bool _doomed;
@@ -96,11 +98,14 @@ protected:
 	void RecordEvent(EventType::Enum event);
 	CorePosition LandPoint(CorePosition point);
 
+
+
 public:
 	vector<Powerup*> powerups;
 	Player();
 	virtual void Update(float dT);
 	virtual void Draw();
+		void BackFromTheDead(CorePosition pos);
 };
 
 #include "DeadPlayer.h"

@@ -1,5 +1,6 @@
 #include "CoreGraphics.h"
 #include <iostream>
+#include "../Revival/Universe.h"
 
 CorePosition centerPoint(-1,-1);
 
@@ -57,7 +58,7 @@ OpenGLTexture * CoreGraphics::CreateTexture(string textureLocation)
 
 void CoreGraphics::DrawRectangle(CorePosition * position, CoreSize * size, int r, int g, int b, int a)
 {
-	glEnable2D();
+//	glEnable2D();
 
 	//glColor4i(r,g,b,a);
 	float rFloat, gFloat, bFloat, aFloat;
@@ -81,12 +82,12 @@ void CoreGraphics::DrawRectangle(CorePosition * position, CoreSize * size, int r
 		glVertex2d(position->GetX(),position->GetY());
 	glEnd();
 
-	glDisable2D();
+	//glDisable2D();
 }
 
 void CoreGraphics::DrawTexture(OpenGLTexture * texture, CorePosition * position, CorePosition * origin, CoreSize * size, float rotation, float red, float green, float blue, float alpha)
 {
-	glEnable2D();
+//	glEnable2D();
 
 	glBindTexture( GL_TEXTURE_2D, texture->Texture());
 
@@ -121,7 +122,7 @@ void CoreGraphics::DrawTexture(OpenGLTexture * texture, CorePosition * position,
 		glVertex2d(position->GetX(),position->GetY());
 	glEnd();
 
-	glDisable2D();
+//	glDisable2D();
 }
 
 void CoreGraphics::DrawTextureFrame(OpenGLTexture * texture, CorePosition * position, CorePosition * origin, CoreSize * size, float rotation, int totalframes, int currentframe, float red, float green, float blue, float alpha )
@@ -132,7 +133,7 @@ void CoreGraphics::DrawTextureFrame(OpenGLTexture * texture, CorePosition * posi
 	GLfloat offset1 = currentframe * frameWidth;
 	GLfloat offset2 = (currentframe + 1) * frameWidth;
 
-	glEnable2D();
+//	glEnable2D();
 
 	glBindTexture( GL_TEXTURE_2D, texture->Texture());
 
@@ -168,7 +169,7 @@ void CoreGraphics::DrawTextureFrame(OpenGLTexture * texture, CorePosition * posi
 		glVertex2d(position->GetX(),position->GetY());
 	glEnd();
 
-	glDisable2D();
+//	glDisable2D();
 }
 
 void CoreGraphics::DrawString(string str, CorePosition * position, SDL_Color color)
@@ -183,7 +184,7 @@ void CoreGraphics::DrawString(string str, CorePosition * position, SDL_Color col
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glEnable(GL_BLEND);
 
-	glEnable2D();
+//	glEnable2D();
 
 	glBindTexture( GL_TEXTURE_2D, oglTex->Texture());
 
@@ -202,7 +203,7 @@ void CoreGraphics::DrawString(string str, CorePosition * position, SDL_Color col
 		glVertex2d(position->GetX(),position->GetY());
 	glEnd();
 
-	glDisable2D();
+//	glDisable2D();
 
 	delete cSize;
 
@@ -242,7 +243,16 @@ void CoreGraphics::glEnable2D()
 	glDisable(GL_DEPTH_TEST);
 	glDisable(GL_LIGHTING);
 
-	glScalef(xScale,yScale,zScale);
+	if(xScale != 1.0 || yScale != 1.0 || zScale != 1.0) {
+		//glRotatef(xScale*36,0,0,1);
+		glScalef(xScale,yScale,zScale);
+		Universe * universe = Universe::Instance();
+		float playerX = universe->_focus->GetPosition().GetX();
+		float playerY = universe->_focus->GetPosition().GetY();
+		playerY -= 150;
+		
+		glTranslatef(-(playerX - playerX / xScale),-(playerY - playerY / xScale),0.0f);
+	}
 }
 
 void CoreGraphics::glDisable2D()
@@ -258,10 +268,12 @@ void CoreGraphics::StartFrame()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
+	glEnable2D();
 }
 
 void CoreGraphics::EndFrame()
 {
+	glDisable2D();
 	SDL_GL_SwapBuffers();
 }
 

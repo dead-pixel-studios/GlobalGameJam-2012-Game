@@ -106,7 +106,14 @@ void DeadPlayer::Update(float delta){
 
 
 	if(Universe::Instance()->_currentMap->IsKillZone(_pos+_point1)) _doomed=true;
+
 	if(currentEvent.type==EventType::Hurt){
+
+		if(Universe::Instance()->_currentMap->winnable()) {
+			((Player*)Universe::Instance()->_focus)->BackFromTheDead(_pos);
+			Universe::Instance()->RemoveAndDeleteSprite(this);
+			return;
+		}
 		_pos=currentEvent.pos;
 		_health-=10;
 	}
