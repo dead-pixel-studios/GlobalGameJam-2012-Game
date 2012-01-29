@@ -206,9 +206,17 @@ CorePosition Player::LandPoint(CorePosition point){
 
 		int count = (int) Universe::Instance()->_currentMap->platforms.size();
 		for(int i = 0; i < count; i++) {
+
+			//if (startPoint.GetY() > 300 && startPoint.GetX() < 200) {
+			//	hit = true;
+			//}
+
 			Platform * element = Universe::Instance()->_currentMap->platforms.at(i);
-			CoreColor temp = element->GetPixel(startPoint);
-			Uint32 tempcol = temp.rgba();
+			if(element->collision_enabled) {
+				CoreColor temp = element->GetPixel(startPoint);
+				Uint32 tempcol = temp.rgba();
+				hit=(tempcol==0x000000ff);
+			}
 		}
 
 		CoreColor pxl=Universe::Instance()->_currentMap->GetPixel(startPoint);

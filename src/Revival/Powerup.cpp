@@ -17,7 +17,14 @@ void Powerup::Update(float)
 	SpriteSet cols=CollisionDetect();
 	Player *player=dynamic_cast<Player*>(Universe::Instance()->_focus);
 	if(cols.count(player)){
+		//todo: player now has a powerup in his inventory
 		player->powerups.push_back(this_powerup_type);
+
+		//for now, just show and enable the ice bridge
+		Universe::Instance()->_currentMap->platforms.at(0)->SetEnabled(true);
+		Universe::Instance()->_currentMap->platforms.at(0)->SetVisible(true);
+
+
 		Universe::Instance()->RemoveAndDeleteSprite(this);
 	}
 }
