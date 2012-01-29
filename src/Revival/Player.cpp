@@ -142,8 +142,9 @@ void Player::Update(float delta){
 		Universe::Instance()->AddSprite(dp);
 		dp->Start();
 	}
-
-	
+	if(_pos.GetX() != lastupdatepos.GetX() || _pos.GetY() != lastupdatepos.GetY()){
+		RecordEvent(EventType::PosChange);
+	}
 }
 
 void Player::Draw(){
