@@ -37,6 +37,7 @@ Player::Player(){
 	this->Gravity = 2.5;
 	this->Velocity= 0;
 	_health=100;
+	_doomed=false;
 
 	_visible=true;
 
@@ -45,23 +46,27 @@ Player::Player(){
 
 	frame_accumulator = 0;
 	lastupdatepos = _pos;
+	_time_elapsed=0;
 }
 
 void Player::Update(float delta){
-
+	_time_elapsed+=delta;
 
 	float move = 0.0F;
 	if(IsKeyDown(SDLK_RIGHT) || IsKeyDown(SDLK_d)){
 		move = maxpixels_persecond_speed * delta * MOVEMENT_FORWARD;
 		currentDirection = MOVEMENT_FORWARD;
+		RecordEvent(EventType::Left);
 	} else if (IsKeyDown(SDLK_LEFT) || IsKeyDown(SDLK_a)){
 		move = maxpixels_persecond_speed * delta * MOVEMENT_BACKWARD;
 		currentDirection =MOVEMENT_BACKWARD;
+		RecordEvent(EventType::Right);
 	} else {
 		currentDirection = 0; // stationary
 	}
 
 	if(IsKeyDown(SDLK_LCTRL) || IsKeyDown(SDLK_w) || IsKeyDown(SDLK_UP)) {
+		RecordEvent(EventType::Jump);
 		if (jumping != true) {
 			Velocity = -30.0F;
 			jumping = true;
@@ -116,14 +121,17 @@ void Player::Update(float delta){
 	}
 
 
-	if(Universe::Instance()->_currentMap->IsKillZone(_pos+_point1)) _health-=10;
+	if(Universe::Instance()->_currentMap->IsKillZone(_pos+_point1)) _doomed=true;
+	if(_doomed) _health-=10;
 	
 	if(_health<=0){
 		//fade out
 		//_visible=false;
 		_pos=CorePosition(0,0);
 		_health=100;
+		_doomed=false;
 		std::cout << "DIED!" << std::endl;
+		RecordEvent(EventType::Die);
 	}
 
 	
@@ -226,4 +234,11 @@ CorePosition Player::LandPoint(CorePosition point){
 		}
 	}
 	return startPoint;
+}
+
+void Player::RecordEvent(EventType::Enum type){
+	PlayerEvent evt;
+	evt.time=_time_elapsed;
+	evt.type=type;
+	_recorded_events.push_back(evt);
 }
