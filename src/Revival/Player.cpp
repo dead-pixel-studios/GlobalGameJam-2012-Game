@@ -105,6 +105,14 @@ void Player::Update(float delta)
 	//	uni->seq->flEffectSends[0]=1.0;
 	//}
 
+	if(IsKeyDown(SDLK_LSHIFT)) {
+		if(powerups.size()>0) {
+			Powerup * pwrup = powerups.at(0);
+			pwrup->Use();
+			powerups.erase(powerups.begin());
+		}
+	}
+
 	if(player1->IsConnected()) {
 		thumblx = player1->GetState().Gamepad.sThumbLX;
 		thumbly = player1->GetState().Gamepad.sThumbLY;
@@ -133,7 +141,7 @@ void Player::Update(float delta)
 		death_accumulator = death_accumulator + delta;
 		if(death_accumulator > 100) {
 			death_accumulator = delta-death_accumulator;
-			death_fade -= 0.05F;
+		//	death_fade -= 0.05F;
 
 			if(death_fade <= 0.0F) {
 				GameOver::Instance()->GameIsOver();
@@ -300,8 +308,9 @@ void Player::Draw()
 	}
 
 	// Draw the sprite
-	if(_visible){
 		CorePosition drawPosition=_pos;
+	if(_visible){
+
 		drawPosition.SetX(drawPosition.GetX()-Universe::Instance()->_worldOffset.GetX());
 		drawPosition.SetY(drawPosition.GetY()-Universe::Instance()->_worldOffset.GetY());
 
@@ -312,6 +321,31 @@ void Player::Draw()
 			this->gEngine->DrawTextureFrame(texture,&drawPosition,&_origin,&_size,_angle,frames,currentframe,1.0F,1.0F,1.0F);
 		}
 	}
+
+	if(dead) {
+		CorePosition * pwrup1pos = new CorePosition(drawPosition.GetX(),drawPosition.GetY()+_size.GetHeight());
+		CorePosition * pwrup2pos = new CorePosition(drawPosition.GetX()+40,drawPosition.GetY()+_size.GetHeight());
+		CorePosition * pwrup3pos = new CorePosition(drawPosition.GetX()+80,drawPosition.GetY()+_size.GetHeight());
+		CoreSize * pwrupsize = new CoreSize(48,48);
+		int count = 0;
+		for(vector<Powerup*>::iterator pwrUpIter = powerups.begin(); pwrUpIter != powerups.end(); pwrUpIter++) {
+			Powerup * pwrup = *pwrUpIter;
+			switch(count) {
+			case 0:
+				this->gEngine->DrawTexture(pwrup->GetTexture(),pwrup1pos,&centerPoint,pwrupsize,-1,1.0,1.0,1.0,0.5);
+			break;
+			case 1:
+				this->gEngine->DrawTexture(pwrup->GetTexture(),pwrup2pos,&centerPoint,pwrupsize,-1,1.0,1.0,1.0,0.5);
+				break;
+			case 2:
+				this->gEngine->DrawTexture(pwrup->GetTexture(),pwrup3pos,&centerPoint,pwrupsize,-1,1.0,1.0,1.0,0.5);
+				break;
+			}
+		}
+		free(pwrup1pos);
+		free(pwrupsize);
+	}
+
 
 	// Draw the two ray-tracing dots (over the sprite)
 	gEngine->DrawRectangle(&cpoint1, &sz33 ,0xff,0,0,0xff);

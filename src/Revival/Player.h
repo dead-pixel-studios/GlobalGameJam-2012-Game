@@ -92,7 +92,7 @@ protected:
 	CorePosition LandPoint(CorePosition point);
 
 public:
-	vector<PowerupType::Enum> powerups;
+	vector<Powerup*> powerups;
 	Player();
 	virtual void Update(float dT);
 	virtual void Draw();
