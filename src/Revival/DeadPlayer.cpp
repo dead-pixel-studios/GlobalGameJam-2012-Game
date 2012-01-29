@@ -123,5 +123,7 @@ void DeadPlayer::Update(float delta){
 		std::cout << "DeadPlayer DIED!" << std::endl;
 	}
 
-	
+	if(currentEvent.type=EventType::PosChange){
+		_pos=currentEvent.pos;
+	}
 }

@@ -14,7 +14,8 @@ namespace EventType{
 		Right,
 		Jump,
 		Die,
-		Hurt
+		Hurt,
+		PosChange
 	};
 }
 
