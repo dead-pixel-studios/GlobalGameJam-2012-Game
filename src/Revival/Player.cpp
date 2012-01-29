@@ -76,7 +76,7 @@ void Player::Update(float delta){
 		move = maxpixels_persecond_speed * delta * MOVEMENT_FORWARD;
 		currentDirection = MOVEMENT_FORWARD;
 		RecordEvent(EventType::Left);
-	} else if (IsKeyDown(SDLK_LEFT) || IsKeyDown(SDLK_a)){
+	}else if (IsKeyDown(SDLK_LEFT) || IsKeyDown(SDLK_a)){
 		move = maxpixels_persecond_speed * delta * MOVEMENT_BACKWARD;
 		currentDirection =MOVEMENT_BACKWARD;
 		RecordEvent(EventType::Right);
@@ -271,7 +271,13 @@ void Player::Draw(){
 		CorePosition drawPosition=_pos;
 		drawPosition.SetX(drawPosition.GetX()-Universe::Instance()->_worldOffset.GetX());
 		drawPosition.SetY(drawPosition.GetY()-Universe::Instance()->_worldOffset.GetY());
-		this->gEngine->DrawTextureFrame(texture,&drawPosition,&_origin,&_size,_angle,frames,currentframe);
+
+		if(dead) {
+				this->gEngine->DrawTextureFrame(texture,&drawPosition,&_origin,&_size,_angle,frames,currentframe,1.0F,1.0F,1.0F,0.5F);
+		}
+		else {
+			this->gEngine->DrawTextureFrame(texture,&drawPosition,&_origin,&_size,_angle,frames,currentframe,1.0F,1.0F,1.0F);
+		}
 	}
 
 	// Draw the two ray-tracing dots (over the sprite)
