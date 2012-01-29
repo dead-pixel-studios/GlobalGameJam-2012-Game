@@ -122,8 +122,19 @@ void DeadPlayer::Update(float delta){
 
 		std::cout << "DeadPlayer DIED!" << std::endl;
 	}
-
 	if(currentEvent.type=EventType::PosChange){
 		_pos=currentEvent.pos;
+		texture=currentEvent.tex;
+		currentframe=currentEvent.currentframe;
+		frames=currentEvent.frames;
+	}
+}
+
+void DeadPlayer::Draw(){
+	if(_visible){
+		CorePosition drawPosition=_pos;
+		drawPosition.SetX(drawPosition.GetX()-Universe::Instance()->_worldOffset.GetX());
+		drawPosition.SetY(drawPosition.GetY()-Universe::Instance()->_worldOffset.GetY());
+		this->gEngine->DrawTextureFrame(texture,&drawPosition,&_origin,&_size,_angle,frames,currentframe);
 	}
 }

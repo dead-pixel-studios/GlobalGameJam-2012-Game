@@ -147,9 +147,6 @@ void Player::Update(float delta){
 		Universe::Instance()->AddSprite(dp);
 		dp->Start();
 	}
-	if(_pos.GetX() != lastupdatepos.GetX() || _pos.GetY() != lastupdatepos.GetY()){
-		RecordEvent(EventType::PosChange);
-	}
 }
 
 void Player::Draw(){
@@ -166,7 +163,7 @@ void Player::Draw(){
 	bacon->y = (Uint16) 0.1;
 
 	//SDL_SetClipRect(this->texture->GetSurface(), bacon);
-	int frames;
+	//int frames;
 	if (currentDirection > 0) { 
 		// moving right
 		if(jumping) {
@@ -209,6 +206,10 @@ void Player::Draw(){
 	// Draw the two ray-tracing dots (over the sprite)
 	gEngine->DrawRectangle(&cpoint1, &sz33 ,0xff,0,0,0xff);
 	gEngine->DrawRectangle(&cpoint2, &sz33 ,0xff,0,0,0xff);
+
+	if(_pos.GetX() != lastupdatepos.GetX() || _pos.GetY() != lastupdatepos.GetY()){
+		RecordEvent(EventType::PosChange);
+	}
 
 	lastupdatepos.SetX(_pos.GetX());
 	lastupdatepos.SetY(_pos.GetY());
@@ -272,5 +273,8 @@ void Player::RecordEvent(EventType::Enum type){
 	evt.time=_time_elapsed;
 	evt.type=type;
 	evt.pos=_pos;
+	evt.tex=texture;
+	evt.currentframe=currentframe;
+	evt.frames=frames;
 	_recorded_events.push_back(evt);
 }

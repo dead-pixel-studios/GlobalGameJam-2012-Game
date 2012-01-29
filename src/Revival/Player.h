@@ -23,6 +23,8 @@ struct PlayerEvent{
 	double time;
 	EventType::Enum type;
 	CorePosition pos;
+	OpenGLTexture *tex;
+	int frames, currentframe;
 };
 
 typedef std::list<PlayerEvent> EventList;
@@ -52,7 +54,7 @@ protected:
 	float maxpixels_persecond_speed;
 	CorePosition lastupdatepos;
 
-	int currentframe;
+	int frames, currentframe;
 	float frame_accumulator;
 
 	float jump_time_length_secs;
@@ -69,6 +71,7 @@ protected:
 	bool WorldCollisionCheck();
 	void RecordEvent(EventType::Enum event);
 	CorePosition LandPoint(CorePosition point);
+
 public:
 	vector<PowerupType::Enum> powerups;
 	Player();
