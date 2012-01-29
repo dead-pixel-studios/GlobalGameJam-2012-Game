@@ -26,8 +26,8 @@ Player::Player()
 	this->_size=CoreSize(145,500);
 	this->_pos=CorePosition(0,0);
 
-	this->_point1=CorePosition(50, 250);
-	this->_point2=CorePosition(100,250);
+	this->_point1=CorePosition(50, 500);
+	this->_point2=CorePosition(100,500);
 	this->_origin=_point1;
 
 	this->jump_time_length_secs = 7.0F; // how long it takes to jump

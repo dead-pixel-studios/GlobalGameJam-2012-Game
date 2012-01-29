@@ -107,16 +107,17 @@ CoreColor TestMap::GetPixel(CorePosition pos){
 
 bool TestMap::IsKillZone(CorePosition pos){
 
+	bool ret=gEngine->getPixelColor(killzone->GetSurface(), pos.GetX(), pos.GetY()).rgba() == 0xff0000ff;
+
 	// if there are any visible platforms first, then the player is safe and stood on a platform (ish)
 	for(int i = 0; i < (int) platforms.size(); i++) {
 		Platform * ref = platforms.at(i);
 
 		if(ref->GetPixel(pos).rgba() == 0xff0000ff) {
 			if(ref->IsVisible() == true) {
-				return false;
+				ret=false;
 			}
 		}
 	}
-
-	return gEngine->getPixelColor(killzone->GetSurface(), pos.GetX(), pos.GetY()).rgba() == 0xff0000ff;
+	return ret;
 }
