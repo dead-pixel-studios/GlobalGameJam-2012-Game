@@ -21,7 +21,9 @@ void CoreGraphics::Init() {
 	SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY ,SDL_DEFAULT_REPEAT_INTERVAL);
 	SDL_GL_SetAttribute( SDL_GL_DOUBLEBUFFER, 1);
 
+	SDL_WM_SetCaption("Revival", NULL);
 	screen = SDL_SetVideoMode(ScreenSize->GetWidth(), ScreenSize->GetHeight(), 32, SDL_OPENGL );
+	
 	SDL_GL_SetAttribute( SDL_GL_RED_SIZE, 8 );
 	SDL_GL_SetAttribute( SDL_GL_GREEN_SIZE, 8 );
 	SDL_GL_SetAttribute( SDL_GL_BLUE_SIZE, 8 );
@@ -35,7 +37,6 @@ void CoreGraphics::Init() {
 
 	TTF_Init();
 	atexit(TTF_Quit);
-
 	std::string strPath = CoreFunctions::GetAppPath();
 	strPath += "/data/slkscr.ttf";
 	defaultFont = TTF_OpenFont(strPath.c_str(), 8);

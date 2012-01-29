@@ -21,6 +21,11 @@ Player::Player()
 	this->staticiso_sprite_texture = gEngine->CreateTexture(CoreFunctions::GetAppPath() + "/data/Static/StaticIsoRight.png");
 	this->staticiso_sprite_texture->Load();
 
+	this->jumpleft_texture = gEngine->CreateTexture(CoreFunctions::GetAppPath() + "/data/Jump/JumpLeft.png");
+	this->jumpleft_texture->Load();
+	this->jumpright_texture = gEngine->CreateTexture(CoreFunctions::GetAppPath() + "/data/Jump/JumpRight.png");
+	this->jumpright_texture->Load();
+
 	this->texture = staticiso_sprite_texture;
 	
 	this->_size=CoreSize(145,500);
@@ -164,17 +169,33 @@ void Player::Draw(){
 	int frames;
 	if (currentDirection > 0) { 
 		// moving right
-		this->texture = movingforward_sprites_texture; 
+		if(jumping) {
+			this->texture = jumpright_texture;
+		}
+		else {
+			this->texture = movingforward_sprites_texture;
+		}
 		frames = 8;
 	} else if (currentDirection < 0) {
 		// moving left
-		this->texture = movingbackwards_sprites_texture;
+		if(jumping) {
+			this->texture = jumpleft_texture;
+		}
+		else {
+			this->texture = movingbackwards_sprites_texture;
+		}
 		frames = 8;
 	} else {
 		// stationary
-		this->texture = staticiso_sprite_texture;
-		currentframe = 0;
-		frames =1;
+		if(jumping) {
+			this->texture = jumpright_texture;
+			frames = 8;
+		}
+		else {
+			this->texture = staticiso_sprite_texture;
+			frames =1;
+			currentframe = 0;
+		}
 	}
 
 	// Draw the sprite
