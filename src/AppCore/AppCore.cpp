@@ -12,6 +12,8 @@ void AppCore::Init() {
 
 	this->universe = Universe::Instance();
 	this->intro = Intro::Instance();
+	this->gameOver = GameOver::Instance();
+
 	frameCount = 0;
 	appStartFrame = -1;
 }
@@ -27,7 +29,12 @@ void AppCore::Update(float fTime)
 	SDL_framerateDelay(this->GraphicsCore->getFPSManager());
 	
 	if(this->intro->finishedIntro()) {
-		this->universe->Update(fTime);
+		if(this->gameOver->IsGameOver()) {
+			this->gameOver->Update(fTime);
+		}
+		else {
+			this->universe->Update(fTime);
+		}
 	}
 	else {
 		this->intro->Update(fTime);
@@ -35,7 +42,12 @@ void AppCore::Update(float fTime)
 	this->GraphicsCore->StartFrame();
 
 	if(this->intro->finishedIntro()) {
-		this->universe->Draw();
+		if(!this->gameOver->IsGameOver()) {
+			this->universe->Draw();
+		}
+		else {
+			this->gameOver->Draw();
+		}
 	}
 	else {
 		this->intro->Draw();

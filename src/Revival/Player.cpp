@@ -68,11 +68,14 @@ Player::Player()
 	frame_accumulator = 0;
 	lastupdatepos = _pos;
 	_time_elapsed=0;
+	death_accumulator = 0;
+	death_fade = 1.0F;
 
 	this->player1 = new CoreController(1);
 }
 
-void Player::Update(float delta){
+void Player::Update(float delta)
+{
 	_time_elapsed+=delta;
 
 	float move = 0.0F;
@@ -103,25 +106,6 @@ void Player::Update(float delta){
 	//}
 
 	if(player1->IsConnected()) {
-		/*if(player1->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_RIGHT) {
-			move = maxpixels_persecond_speed * delta * MOVEMENT_FORWARD;
-			currentDirection = MOVEMENT_FORWARD;
-			RecordEvent(EventType::Left);
-		}
-		else if(player1->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_LEFT) {
-			move = maxpixels_persecond_speed * delta * MOVEMENT_BACKWARD;
-			currentDirection =MOVEMENT_BACKWARD;
-			RecordEvent(EventType::Right);
-		}
-		else if(player1->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_UP) {
-			RecordEvent(EventType::Jump);
-			if (jumping != true) {
-				Velocity = -30.0F;
-				jumping = true;
-			}
-		}
-		*/
-
 		thumblx = player1->GetState().Gamepad.sThumbLX;
 		thumbly = player1->GetState().Gamepad.sThumbLY;
 
@@ -141,6 +125,18 @@ void Player::Update(float delta){
 			if (jumping != true) {
 				Velocity = -30.0F;
 				jumping = true;
+			}
+		}
+	}
+
+	if(dead) {
+		death_accumulator = death_accumulator + delta;
+		if(death_accumulator > 100) {
+			death_accumulator = delta-death_accumulator;
+			death_fade -= 0.05F;
+
+			if(death_fade <= 0.0F) {
+				GameOver::Instance()->GameIsOver();
 			}
 		}
 	}
@@ -200,7 +196,7 @@ void Player::Update(float delta){
 		_health-=10;
 	}
 	
-	if(_health<=0){
+	if(_health<=0) {
 		RecordEvent(EventType::Die);
 		//fade out
 		//_visible=false;
@@ -216,7 +212,8 @@ void Player::Update(float delta){
 	}
 }
 
-void Player::Draw(){
+void Player::Draw()
+{
 	CorePosition cpoint1=_lpoint1-Universe::Instance()->_worldOffset;
 	CorePosition cpoint2=_lpoint1-Universe::Instance()->_worldOffset;
 
@@ -309,7 +306,7 @@ void Player::Draw(){
 		drawPosition.SetY(drawPosition.GetY()-Universe::Instance()->_worldOffset.GetY());
 
 		if(dead) {
-				this->gEngine->DrawTextureFrame(texture,&drawPosition,&_origin,&_size,_angle,frames,currentframe,1.0F,1.0F,1.0F,0.5F);
+				this->gEngine->DrawTextureFrame(texture,&drawPosition,&_origin,&_size,_angle,frames,currentframe,1.0F,1.0F,1.0F,death_fade);
 		}
 		else {
 			this->gEngine->DrawTextureFrame(texture,&drawPosition,&_origin,&_size,_angle,frames,currentframe,1.0F,1.0F,1.0F);
