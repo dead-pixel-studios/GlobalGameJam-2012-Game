@@ -2,10 +2,31 @@
 
 #include "SpriteBase.h"
 #include <vector>
+#include <list>
 #include "Powerup.h"
 
+class DeadPlayer;
+
+namespace EventType{
+	enum Enum{
+		None,
+		Left,
+		Right,
+		Jump,
+		Die
+	};
+}
+
+struct PlayerEvent{
+	double time;
+	EventType::Enum type;
+	CorePosition pos;
+};
+
+typedef std::list<PlayerEvent> EventList;
+
 class Player : public SpriteBase{
-private:
+protected:
 	bool _hitFloor;
 	
 	int currentDirection;
@@ -33,14 +54,21 @@ private:
 	float jump_current_velocity_pixels_sec;
 	float jump_elapsed;
 	bool jumping;
+	bool _doomed;
+
+	int _health;
+	double _time_elapsed;
+
+	EventList _recorded_events;
 
 	bool WorldCollisionCheck();
+	void RecordEvent(EventType::Enum event);
 	CorePosition LandPoint(CorePosition point);
-	int _health;
-
 public:
 	vector<PowerupType::Enum> powerups;
 	Player();
-	void Update(float dT);
-	void Draw();
+	virtual void Update(float dT);
+	virtual void Draw();
 };
+
+#include "DeadPlayer.h"

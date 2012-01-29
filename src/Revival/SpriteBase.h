@@ -1,7 +1,6 @@
 #pragma once
 
 #include "../CoreEngine/CoreGraphics.h"
-#include "Universe.h"
 #include <set>
 
 class CoreGraphics;
@@ -45,3 +44,5 @@ public:
 	bool IsVisible();
 	bool IsSolid();
 };
+
+#include "Universe.h"
