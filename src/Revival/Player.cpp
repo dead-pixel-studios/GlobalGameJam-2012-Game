@@ -129,7 +129,10 @@ void Player::Update(float delta){
 
 
 	if(Universe::Instance()->_currentMap->IsKillZone(_pos+_point1)) _doomed=true;
-	if(_doomed) _health-=10;
+	if(_doomed){
+		RecordEvent(EventType::Hurt);
+		_health-=10;
+	}
 	
 	if(_health<=0){
 		RecordEvent(EventType::Die);

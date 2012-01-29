@@ -106,7 +106,10 @@ void DeadPlayer::Update(float delta){
 
 
 	if(Universe::Instance()->_currentMap->IsKillZone(_pos+_point1)) _doomed=true;
-	if(_doomed) _health-=10;
+	if(currentEvent.type==EventType::Hurt){
+		_pos=currentEvent.pos;
+		_health-=10;
+	}
 	
 	if(currentEvent.type==EventType::Die){
 		_pos=currentEvent.pos;
